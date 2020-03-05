@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using KursProject.Modules;
 
 namespace UZNRKT
 {
@@ -20,9 +21,49 @@ namespace UZNRKT
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Упрощенное взаимодействие с БД
+        /// </summary>
+        UsingAccess UsAc;
+        /// <summary>
+        /// Логин пользователя
+        /// </summary>
+        string UserName = null;
+        /// <summary>
+        /// ID пользователя
+        /// </summary>
+        string UserID = null;
+        /// <summary>
+        /// Роль пользователя
+        /// </summary>
+        string UserRole = null;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            //TODO: добавить проверку наличия БД
+            UsAc = new UsingAccess("db.accdb", null, null, "install");
+            UsAc.AutoOpen = true;
+
+            //Авторизация пользователя
+            var window = new Windows.LoginPassword(UsAc);
+            if (window.ShowDialog() == true)
+            {
+                //Запись данных о вошедшем пользователе
+                UserRole = window.Role;
+                UserName = window.Login;
+                UserID = window.ID;
+            }
+            else
+            {
+                //Вход был отменен
+                this.Close();
+                return;
+            }
+            //
+            //..
+            //
         }
     }
 }
