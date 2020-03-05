@@ -45,10 +45,6 @@ namespace KursProject.Modules
                 {
                     result += $"Data Source={this.DataSource};";
                 }
-                if (this.Password != null || this.Login != null)
-                {
-                    result += "Persist Security Info=True;";
-                } 
                 if (this.Login != null)
                 {
                     result += $"User ID={this.Login};";

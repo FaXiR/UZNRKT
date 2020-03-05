@@ -24,19 +24,19 @@ namespace UZNRKT
         /// <summary>
         /// Упрощенное взаимодействие с БД
         /// </summary>
-        UsingAccess UsAc;
+        private UsingAccess UsAc;
         /// <summary>
         /// Логин пользователя
         /// </summary>
-        string UserName = null;
+        private string UserName = null;
         /// <summary>
         /// ID пользователя
         /// </summary>
-        string UserID = null;
+        private string UserID = null;
         /// <summary>
         /// Роль пользователя
         /// </summary>
-        string UserRole = null;
+        private string UserRole = null;
 
         public MainWindow()
         {
