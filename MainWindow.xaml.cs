@@ -103,5 +103,29 @@ namespace UZNRKT
                 return false;
             }
         }
+        /// <summary>
+        /// Событие при закрытии приложения
+        /// </summary>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //Если подключения к БД нет или пользователь не авторизован - закрыть приложение без раздумий
+            if (UsAc == null || UserID == null)
+            {
+                return;
+            }
+
+            //Опрос пользователя
+            if (MessageBox.Show("Выйти из программы?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.No)
+            {
+                try
+                {
+                    UsAc.ConnectClose();
+                }
+                finally
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
     }
 }
