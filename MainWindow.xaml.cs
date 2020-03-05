@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,13 +38,33 @@ namespace UZNRKT
         /// Роль пользователя
         /// </summary>
         private string UserRole = null;
+        /// <summary>
+        /// Путь до БД
+        /// </summary>
+        private string BDWay = Environment.CurrentDirectory + "\\db.accdb";
 
         public MainWindow()
         {
             InitializeComponent();
 
-            //TODO: добавить проверку наличия БД
-            UsAc = new UsingAccess("db.accdb", null, null, "install");
+            //Подключение к БД
+            try
+            {
+                //Чтение пути до БД из файла
+                string way = File.ReadAllLines("db.txt", Encoding.GetEncoding(1251))[0];
+                if (way != "")
+                {
+                    BDWay = way;
+                }
+            }
+            catch { }
+            if (!CreateConnection())
+            {
+                //Если подключиться не удалось
+                MessageBox.Show("Не удалось подключится к базе данных, пожалуйста, обратитесь к администратору");
+                this.Close();
+                return;
+            }
             UsAc.AutoOpen = true;
 
             //Авторизация пользователя
@@ -64,6 +85,23 @@ namespace UZNRKT
             //
             //..
             //
+        }
+
+        /// <summary>
+        /// Создание подключения
+        /// </summary>
+        /// <returns>Успех подключения</returns>
+        private bool CreateConnection()
+        {
+            try
+            {
+                UsAc = new UsingAccess(BDWay, null, null, "install");
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

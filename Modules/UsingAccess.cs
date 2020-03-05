@@ -98,7 +98,7 @@ namespace KursProject.Modules
         /// Упрощенное взаимодействие с БД Access. Для ненужных полей используйте null
         /// </summary>
         /// <param name="DataSource">Путь к БД</param>
-        /// <param name="Provider">Провайдер доступа. Например: Microsoft.Jet.OLEDB.4.0 / Microsoft.ACE.OLEDB.12.0</param>
+        /// <param name="Provider">Провайдер доступа. Например: Microsoft.Jet.OLEDB.4.0 / Microsoft.ACE.OLEDB.12.0. Если null, то определяет автоматически.</param>
         /// <param name="Login">Логин от БД</param>
         /// <param name="Password">Пароль от БД</param>
         public UsingAccess(string DataSource, string Provider, string Login, string Password)
