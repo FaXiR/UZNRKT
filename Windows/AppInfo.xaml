@@ -1,0 +1,12 @@
+﻿<Window x:Class="UZNRKT.Windows.AppInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UZNRKT.Windows"
+        mc:Ignorable="d"
+        Title="О программе" Height="300" Width="400" ResizeMode="NoResize">
+    <Grid>
+        <Label Content="О программе" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"/>
+    </Grid>
+</Window>

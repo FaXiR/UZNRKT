@@ -60,6 +60,9 @@
     </ApplicationDefinition>
     <Compile Include="Modules\ProgrammLogic.cs" />
     <Compile Include="Modules\UsingAccess.cs" />
+    <Compile Include="Windows\AppInfo.xaml.cs">
+      <DependentUpon>AppInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\LoginPassword.xaml.cs">
       <DependentUpon>LoginPassword.xaml</DependentUpon>
     </Compile>
@@ -75,6 +78,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Windows\AppInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\LoginPassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

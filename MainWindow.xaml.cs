@@ -72,6 +72,8 @@ namespace UZNRKT
         /// </summary>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            Console.WriteLine("Событие закрытия окна");
+
             //Если подключения к БД нет или пользователь не авторизован - закрыть приложение без раздумий
             if (UsAc == null || UserID == null)
             {
@@ -152,11 +154,20 @@ namespace UZNRKT
             MenuItem menuItem = (MenuItem)sender;
             switch (menuItem.Header.ToString())
             {
+                case "О программе":
+                    {
+                        var InfoWindow = new Windows.AppInfo();
+                        Console.WriteLine("Открытие окна о программе");
+                        InfoWindow.ShowDialog();
+                    }
+                    break;
                 case "Выход":
-                    UserName = UserID = UserRole = null;
-                    this.Hide();
-                    Console.WriteLine("Выход из учетки");
-                    AutorizationUser();
+                    {
+                        UserName = UserID = UserRole = null;
+                        this.Hide();
+                        Console.WriteLine("Выход из учетки");
+                        AutorizationUser();
+                    }
                     break;
 
                 default:

@@ -8,8 +8,12 @@
         Title="Учёт заявок ООО ТПК ТехноСервис" Height="450" Width="800" Closing="Window_Closing">
     <Grid>
         <Menu Height="25" VerticalAlignment="Top">
+            <MenuItem Header="Справочники" Click="MenuItem_Click"/>
+            <MenuItem Header="Печать" Click="MenuItem_Click"/>
+            <MenuItem Header="Настройка" Click="MenuItem_Click"/>
+            <MenuItem Header="Помощь" Click="MenuItem_Click"/>
+            <MenuItem Header="О программе" Click="MenuItem_Click"/>
             <MenuItem Header="Выход" Click="MenuItem_Click"/>
         </Menu>
-
     </Grid>
 </Window>
