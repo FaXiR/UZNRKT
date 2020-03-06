@@ -35,6 +35,7 @@ namespace UZNRKT.Windows
         /// <param name="usingAccess">Соеденение с Access для проверки Логина/Пароля</param>
         public LoginPassword(UsingAccess usingAccess)
         {
+            System.Console.WriteLine("Запуск окна авторизации");
             InitializeComponent();
             UsAc = usingAccess;
             F_Login.Focus();
@@ -44,13 +45,22 @@ namespace UZNRKT.Windows
         /// </summary>
         private void Enter(object sender, RoutedEventArgs e)
         {
-            attemptEnter();
+            AttemptEnter();
         }
         /// <summary>
         /// Проверка полей на пустоту и попытка авторизации
         /// </summary>
-        private void attemptEnter()
+        private void AttemptEnter()
         {
+            //TODO: удалить
+            {
+                Login = "admin";
+                Password = "12345";
+                CheckLogPas();
+                this.DialogResult = true;
+                return;
+            }
+            
             if (F_Login.Text == "" && F_Password.Password == "")
             {
                 MessageBox.Show("Введите пользователя и пароль");
@@ -67,7 +77,7 @@ namespace UZNRKT.Windows
                 return;
             }
 
-            if (checkLogPas())
+            if (CheckLogPas())
             {
                 this.DialogResult = true;
             }
@@ -82,8 +92,9 @@ namespace UZNRKT.Windows
         /// Поиск логина/пароля в БД
         /// </summary>
         /// <returns>Наличие записи</returns>
-        private bool checkLogPas()
+        private bool CheckLogPas()
         {
+            System.Console.WriteLine($"Поиск в БД записи {F_Login.Text} и {F_Password.Password}");
             //Проверка записи в БД
             var FoundRole = UsAc.Execute($@"Select Role, ID_User From Users where Login_User = ""{F_Login.Text}"" and Password_User = ""{F_Password.Password}""");
             if (FoundRole.Count == 0)
@@ -92,6 +103,7 @@ namespace UZNRKT.Windows
             }
             else
             {
+                System.Console.WriteLine("Запись найдена");
                 Role = FoundRole.Table.Rows[0]["Role"].ToString();
                 ID = FoundRole.Table.Rows[0]["ID_User"].ToString();
                 return true;
@@ -115,7 +127,7 @@ namespace UZNRKT.Windows
         {
             if (e.Key == Key.Enter)
             {
-                attemptEnter();
+                AttemptEnter();
             }
         }
     }

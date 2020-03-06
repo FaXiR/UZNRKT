@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UZNRKT"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Closing="Window_Closing">
+        Title="Учёт заявок ООО ТПК ТехноСервис" Height="450" Width="800" Closing="Window_Closing">
     <Grid>
-        
+        <Menu Height="25" VerticalAlignment="Top">
+            <MenuItem Header="Выход" Click="MenuItem_Click"/>
+        </Menu>
+
     </Grid>
 </Window>

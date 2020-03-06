@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using KursProject.Modules;
+using UZNRKT.Modules;
 
 namespace UZNRKT
 {
@@ -47,44 +48,7 @@ namespace UZNRKT
         {
             InitializeComponent();
 
-            //Подключение к БД
-            try
-            {
-                //Чтение пути до БД из файла
-                string way = File.ReadAllLines("db.txt", Encoding.GetEncoding(1251))[0];
-                if (way != "")
-                {
-                    BDWay = way;
-                }
-            }
-            catch { }
-            if (!CreateConnection())
-            {
-                //Если подключиться не удалось
-                MessageBox.Show("Не удалось подключится к базе данных, пожалуйста, обратитесь к администратору");
-                this.Close();
-                return;
-            }
-            UsAc.AutoOpen = true;
-
-            //Авторизация пользователя
-            var window = new Windows.LoginPassword(UsAc);
-            if (window.ShowDialog() == true)
-            {
-                //Запись данных о вошедшем пользователе
-                UserRole = window.Role;
-                UserName = window.Login;
-                UserID = window.ID;
-            }
-            else
-            {
-                //Вход был отменен
-                this.Close();
-                return;
-            }
-            //
-            //..
-            //
+            AutorizationUser();
         }
 
         /// <summary>
@@ -126,6 +90,80 @@ namespace UZNRKT
                     e.Cancel = true;
                 }
             }
+        }
+        /// <summary>
+        /// Подключение к БД и авторизация пользователя
+        /// </summary>
+        private void AutorizationUser()
+        {
+            Console.WriteLine("Подключение к БД");
+            //Подключение к БД
+            try
+            {
+                //Чтение пути до БД из файла
+                string way = File.ReadAllLines("db.txt", Encoding.GetEncoding(1251))[0];
+                if (way != "")
+                {
+                    BDWay = way;
+                }
+            }
+            catch { }
+            Console.WriteLine("Путь к БД: " + BDWay);
+            Console.WriteLine("Подключение к Access");
+            if (!CreateConnection())
+            {
+                //Если подключиться не удалось
+                MessageBox.Show("Не удалось подключится к базе данных, пожалуйста, обратитесь к администратору");
+                this.Close();
+                return;
+            }
+            UsAc.AutoOpen = true;
+            Console.WriteLine("Подключено");
+            Console.WriteLine("Авторизация");
+            //Авторизация пользователя
+            var window = new Windows.LoginPassword(UsAc);
+            if (window.ShowDialog() == true)
+            {
+                //Запись данных о вошедшем пользователе
+                UserRole = window.Role;
+                UserName = window.Login;
+                UserID = window.ID;
+
+                Console.WriteLine(UserRole);
+                Console.WriteLine(UserName);
+                Console.WriteLine(UserID);
+                this.Show();
+            }
+            else
+            {
+                //Вход был отменен
+                this.Close();
+                return;
+            }
+            //
+            //..
+            //
+        }
+        /// <summary>
+        /// События нажатия элемента в Menu
+        /// </summary>
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = (MenuItem)sender;
+            switch (menuItem.Header.ToString())
+            {
+                case "Выход":
+                    UserName = UserID = UserRole = null;
+                    this.Hide();
+                    Console.WriteLine("Выход из учетки");
+                    AutorizationUser();
+                    break;
+
+                default:
+                    MessageBox.Show(menuItem.Header.ToString());
+                    break;
+            }
+            
         }
     }
 }
