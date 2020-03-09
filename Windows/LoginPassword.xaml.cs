@@ -51,16 +51,7 @@ namespace UZNRKT.Windows
         /// Проверка полей на пустоту и попытка авторизации
         /// </summary>
         private void AttemptEnter()
-        {
-            //TODO: удалить
-            {
-                Login = "admin";
-                Password = "12345";
-                CheckLogPas();
-                this.DialogResult = true;
-                return;
-            }
-            
+        {            
             if (F_Login.Text == "" && F_Password.Password == "")
             {
                 MessageBox.Show("Введите пользователя и пароль");
