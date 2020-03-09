@@ -60,6 +60,9 @@
     </ApplicationDefinition>
     <Compile Include="Modules\ProgrammLogic.cs" />
     <Compile Include="Modules\UsingAccess.cs" />
+    <Compile Include="Windows\AddApplication.xaml.cs">
+      <DependentUpon>AddApplication.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\AppInfo.xaml.cs">
       <DependentUpon>AppInfo.xaml</DependentUpon>
     </Compile>
@@ -78,6 +81,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Windows\AddApplication.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\AppInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

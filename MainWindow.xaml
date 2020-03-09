@@ -7,7 +7,12 @@
         mc:Ignorable="d"
         Title="Учёт заявок ООО ТПК ТехноСервис" Height="450" Width="800" Closing="Window_Closing">
     <Grid>
-        <Menu Height="25" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- Меню -->
+        <Menu Grid.Row="0" Height="25" VerticalAlignment="Top" >
             <MenuItem Header="Справочники" Click="MenuItem_Click"/>
             <MenuItem Header="Печать" Click="MenuItem_Click"/>
             <MenuItem Header="Настройка" Click="MenuItem_Click"/>
@@ -15,5 +20,67 @@
             <MenuItem Header="О программе" Click="MenuItem_Click"/>
             <MenuItem Header="Выход" Click="MenuItem_Click"/>
         </Menu>
+        <!-- Грид содержания других гридов -->
+        <Grid Grid.Row="1">
+            <!-- Заявки -->
+            <Grid x:Name="F_Grid_Applications">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="90"/>
+                </Grid.RowDefinitions>
+
+                <!-- Панель заявок -->
+                <Grid Grid.Row="0" >
+                    <!-- Панель поиска для заявки -->
+                    <TextBlock Text="Панель поиска" />
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,20,0,0">
+                        <StackPanel>
+                            <TextBlock Text="ID заявки" />
+                            <TextBox x:Name="F_Grid_Applications_ID_Application"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="Дата заявки" />
+                            <DatePicker x:Name="F_Grid_Applications_DateApplication"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="Клиент" />
+                            <TextBox x:Name="F_Grid_Applications_Client"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="Статус" />
+                            <TextBox x:Name="F_Grid_Applications_Status"/>
+                        </StackPanel>
+                        <Button Content="Найти" Width="60" Height="24" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="F_Grid_Applications_FoundClick"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Титульная часть -->
+                <Grid Grid.Row="1" Margin="4,0,4,0" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Button Margin="1,1,4,1" Height="18" Width="18" Click="F_Grid_Applications_ResetClick">
+
+                        </Button>
+                        <TextBlock Text="Список заявок:" FontFamily="Arial" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBlock x:Name="F_Grid_Applications_TitleCountApplication" FontFamily="Arial" FontSize="16" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Visibility="Hidden" x:Name="F_Grid_Applications_TitleSelect" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <TextBlock Text="Выбрана заявка:" FontFamily="Arial" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,4,0"/>
+                        <TextBlock x:Name="F_Grid_Applications_TitleSelectApplication" FontFamily="Arial" FontSize="16" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+                
+                <!-- Таблица -->
+                <DataGrid Grid.Row="2" x:Name="F_ListOfApplications" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChanged" />
+                
+                <!-- Взаимодействие кнопками -->
+                <Grid Grid.Row="3">
+                    <Button Content="Добавить" Height="20" Width="100" HorizontalAlignment="Left" Click="F_Grid_Applications_AddClick"/>
+                    <Button Content="Удалить" Height="20" Width="100" HorizontalAlignment="Right" Click="F_Grid_Applications_DeleteClick"/>
+                </Grid>
+            </Grid>
+
+        </Grid>
     </Grid>
 </Window>

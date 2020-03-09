@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -49,6 +50,8 @@ namespace UZNRKT
             InitializeComponent();
 
             AutorizationUser();
+
+            FoundApplicationInList(null, null, null, null);
         }
 
         /// <summary>
@@ -174,7 +177,195 @@ namespace UZNRKT
                     MessageBox.Show(menuItem.Header.ToString());
                     break;
             }
-            
+
+        }
+
+
+
+
+
+        /// <summary>
+        /// Событие автогенерации колонок. Отлавливает и корректирует поля Даты.
+        /// </summary>
+        private void DataGrid_OnAutoGenerating(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.PropertyType == typeof(DateTime))
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "dd.MM.yyyy";
+        }
+
+        /// <summary>
+        /// Событие клика по записи. Задает index выбранной записи
+        /// </summary>
+        private void DataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            DataGrid DG = (DataGrid)sender;
+
+            //Получение имени
+            string name = DG.Name;
+            //Получение номера записи
+            int index = DG.SelectedIndex;
+
+            if (index == -1)
+            {
+                Title_SelectApplication = null;
+            }
+            else
+            {
+                Title_SelectApplication = ((DataView)DG.ItemsSource).Table.Rows[index]["ID_Zayavki"].ToString();
+            }
+        }
+
+
+        /// <summary>
+        /// Задает число найденных заявок
+        /// </summary>
+        private string Title_ApplicationsListCount
+        {
+            set
+            {
+                if (value == null)
+                {
+                    F_Grid_Applications_TitleCountApplication.Text = null;
+                }
+                else
+                {
+                    F_Grid_Applications_TitleCountApplication.Text = "найдено " + value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Возвращает или задает index выбранной заявки (Индекс = номер заявки)
+        /// </summary>
+        private string Title_SelectApplication
+        {
+            get
+            {
+                return _selectApplicationIndex;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    F_Grid_Applications_TitleSelectApplication.Text = value;
+                    F_Grid_Applications_TitleSelect.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    F_Grid_Applications_TitleSelectApplication.Text = value;
+                    F_Grid_Applications_TitleSelect.Visibility = Visibility.Visible;
+                }
+
+                _selectApplicationIndex = value;
+            }
+        }
+        private string _selectApplicationIndex = null;
+
+
+        /// <summary>
+        /// Событие нажатия кнопки добавления записи
+        /// </summary>
+        private void F_Grid_Applications_AddClick(object sender, RoutedEventArgs e)
+        {
+            Windows.AddApplication AddApp = new Windows.AddApplication(UsAc);
+
+            string DateApplication;
+            string Client;
+            string Type;
+            string Producer;
+
+            //Получение результата
+            if (AddApp.ShowDialog() == true)
+            {
+                DateApplication = AddApp.DateApplication;
+                Client = AddApp.Client;
+                Type = AddApp.Type;
+                Producer = AddApp.Producer;
+            }
+            else
+            {
+                MessageBox.Show("Запись была отменена");
+                return;
+            }
+
+            string request = $@"INSERT INTO Zayavki (Date_Zayavki, Client, Type_Tehniki_Zayavki, Izgotovitel) VALUES (""{DateApplication}"", {Client}, {Type}, {Producer})";
+
+            UsAc.ExecuteNonQuery(request);
+        }
+
+        /// <summary>
+        /// Событие нажатия кнопки сброса списка заявок
+        /// </summary>
+        private void F_Grid_Applications_ResetClick(object sender, RoutedEventArgs e)
+        {
+            FoundApplicationInList(null, null, null, null);
+        }
+
+        /// <summary>
+        /// Событие нажатия кнопки поиска заявок
+        /// </summary>
+        private void F_Grid_Applications_FoundClick(object sender, RoutedEventArgs e)
+        {
+            FoundApplicationInList(F_Grid_Applications_ID_Application.Text, F_Grid_Applications_DateApplication.Text, F_Grid_Applications_Client.Text, F_Grid_Applications_Status.Text);
+        }
+
+        /// <summary>
+        /// Событие нажатия кнопки удаления записи в списке заявок
+        /// </summary>
+        private void F_Grid_Applications_DeleteClick(object sender, RoutedEventArgs e)
+        {
+            if (Title_SelectApplication == null)
+            {
+                return;
+            }
+
+            try
+            {
+                UsAc.ExecuteNonQuery($@"DELETE FROM Zayavki WHERE ID_Zayavki = ""{Title_SelectApplication}""");
+            }
+            finally
+            {
+                MessageBox.Show("Запись удалена, обновите таблицу");
+                Title_SelectApplication = null;
+            }
+        }
+
+        /// <summary>
+        /// Поиск записей в таблице Zayavki.
+        /// </summary>
+        private void FoundApplicationInList(string ID_Application, string Date_Application, string ID_Client, string ID_Status)
+        {
+            string request = "Select * from Zayavki";
+
+            if (!(ID_Application == null && ID_Application != "" || Date_Application == null && Date_Application != "" || ID_Client == null && ID_Client != "" || ID_Status == null && ID_Status != ""))
+            {
+                request += " where 1=1";
+
+                if (ID_Application != null && ID_Application != "")
+                {
+                    request += $@" and ID_Zayavki = {ID_Application}";
+                }
+
+                if (Date_Application != null && Date_Application != "")
+                {
+                    request += $@" and Date_Zayavki = ""{Date_Application}""";
+                }
+
+                if (ID_Client != null && ID_Client != "")
+                {
+                    request += $@" and Client = {ID_Client}";
+                }
+
+                if (ID_Status != null && ID_Status != "")
+                {
+                    request += $@" and Statys = {ID_Status}";
+                }
+            }
+
+            var TimedTable = UsAc.Execute(request);
+
+            F_ListOfApplications.ItemsSource = TimedTable;
+            Title_ApplicationsListCount = TimedTable.Count.ToString();
         }
     }
 }
