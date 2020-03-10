@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CourseProject.Modules;
 using KursProject.Modules;
 using UZNRKT.Modules;
 
@@ -28,6 +30,10 @@ namespace UZNRKT
         /// Упрощенное взаимодействие с БД
         /// </summary>
         private UsingAccess UsAc;
+        /// <summary>
+        /// Упрощенное взаимодействие с таблицами
+        /// </summary>
+        private Tables Table;
         /// <summary>
         /// Логин пользователя
         /// </summary>
@@ -52,6 +58,8 @@ namespace UZNRKT
             AutorizationUser();
 
             FoundApplicationInList(null, null, null, null);
+
+            LoadClientAndStatus();
         }
 
         /// <summary>
@@ -59,15 +67,24 @@ namespace UZNRKT
         /// </summary>
         /// <returns>Успех подключения</returns>
         private bool CreateConnection()
+
         {
             try
             {
-                UsAc = new UsingAccess(BDWay, null, null, "install");
+                UsAc = new UsingAccess(BDWay, null, null, null);
                 return true;
             }
             catch
             {
-                return false;
+                try
+                {
+                    UsAc = new UsingAccess(BDWay, null, null, "install");
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
             }
         }
         /// <summary>
@@ -145,10 +162,11 @@ namespace UZNRKT
                 this.Close();
                 return;
             }
-            //
-            //..
-            //
+
+            //Объявление таблиц
+            Table = new Tables(UsAc);
         }
+
         /// <summary>
         /// События нажатия элемента в Menu
         /// </summary>
@@ -211,8 +229,38 @@ namespace UZNRKT
             }
             else
             {
-                Title_SelectApplication = ((DataView)DG.ItemsSource).Table.Rows[index]["ID_Zayavki"].ToString();
+                Title_SelectApplication = ((DataView)DG.ItemsSource).Table.Rows[index]["ID заявки"].ToString();
             }
+        }
+
+        /// <summary>
+        /// Подргужает известных клиентов и статусы в F_Grid_Applications_Client и F_Grid_Applications_Status
+        /// </summary>
+        private void LoadClientAndStatus()
+        {
+            ObservableCollection<string> ClientList = new ObservableCollection<string>();
+            ClientList.Add("---");
+
+            var tab = UsAc.Execute("SELECT FIO_Client FROM Clients");
+            for (int i = 0; i< tab.Count; i++)
+            {
+                ClientList.Add(tab.Table.Rows[i]["FIO_Client"].ToString());
+            }
+            F_Grid_Applications_Client.ItemsSource = ClientList;
+
+
+            ObservableCollection<string> StatusList = new ObservableCollection<string>();
+            StatusList.Add("---");
+
+            tab = UsAc.Execute("SELECT Statys_Statys FROM Statys");
+            for (int i = 0; i < tab.Count; i++)
+            {
+                StatusList.Add(tab.Table.Rows[i]["Statys_Statys"].ToString());
+            }
+            F_Grid_Applications_Status.ItemsSource = StatusList;
+
+            F_Grid_Applications_Client.SelectedIndex = 0;
+            F_Grid_Applications_Status.SelectedIndex = 0;
         }
 
 
@@ -321,7 +369,7 @@ namespace UZNRKT
 
             try
             {
-                UsAc.ExecuteNonQuery($@"DELETE FROM Zayavki WHERE ID_Zayavki = ""{Title_SelectApplication}""");
+                Table.Zayavki.DeleteFrom($@"ID_Zayavki = ""{ Title_SelectApplication}""");
             }
             finally
             {
@@ -333,39 +381,41 @@ namespace UZNRKT
         /// <summary>
         /// Поиск записей в таблице Zayavki.
         /// </summary>
-        private void FoundApplicationInList(string ID_Application, string Date_Application, string ID_Client, string ID_Status)
+        private void FoundApplicationInList(string ID_Application, string Date_Application, string FIO_Client, string Statys_Statys)
         {
-            string request = "Select * from Zayavki";
+            string request = null;
 
-            if (!(ID_Application == null && ID_Application != "" || Date_Application == null && Date_Application != "" || ID_Client == null && ID_Client != "" || ID_Status == null && ID_Status != ""))
+            if (!(ID_Application == null && ID_Application != "" || Date_Application == null && Date_Application != "" || FIO_Client == null && FIO_Client != "" || Statys_Statys == null && Statys_Statys != ""))
             {
-                request += " where 1=1";
+                request += "1=1";
 
                 if (ID_Application != null && ID_Application != "")
                 {
-                    request += $@" and ID_Zayavki = {ID_Application}";
+                    request += $@" and Zayavki.ID_Zayavki = {ID_Application}";
                 }
 
                 if (Date_Application != null && Date_Application != "")
                 {
-                    request += $@" and Date_Zayavki = ""{Date_Application}""";
+                    string FoundDate = Date_Application.Substring(3, 2) + "/" + Date_Application.Substring(0, 2) + "/" + Date_Application.Substring(6, 4);
+                    request += $@" and Zayavki.Date_Zayavki = #{FoundDate}#";
                 }
 
-                if (ID_Client != null && ID_Client != "")
+                if (FIO_Client != null && FIO_Client != "" && FIO_Client != "---")
                 {
-                    request += $@" and Client = {ID_Client}";
+                    request += $@" and Clients.FIO_Client = ""{FIO_Client}""";
                 }
 
-                if (ID_Status != null && ID_Status != "")
+                if (Statys_Statys != null && Statys_Statys != "" && Statys_Statys != "---")
                 {
-                    request += $@" and Statys = {ID_Status}";
+                    request += $@" and Statys.Statys_Statys = ""{Statys_Statys}""";
                 }
             }
 
-            var TimedTable = UsAc.Execute(request);
+            Table.Zayavki.Where = request;
+            Table.Zayavki.UpdateTable();
 
-            F_ListOfApplications.ItemsSource = TimedTable;
-            Title_ApplicationsListCount = TimedTable.Count.ToString();
+            F_ListOfApplications.ItemsSource = Table.Zayavki.DVTable;
+            Title_ApplicationsListCount = Table.Zayavki.DVTable.Count.ToString();
         }
     }
 }

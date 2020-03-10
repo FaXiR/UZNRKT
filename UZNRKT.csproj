@@ -59,7 +59,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Modules\ProgrammLogic.cs" />
+    <Compile Include="Modules\Tables.cs" />
     <Compile Include="Modules\UsingAccess.cs" />
+    <Compile Include="Modules\UsingDataView.cs" />
     <Compile Include="Windows\AddApplication.xaml.cs">
       <DependentUpon>AddApplication.xaml</DependentUpon>
     </Compile>
