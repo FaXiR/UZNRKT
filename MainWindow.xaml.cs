@@ -55,38 +55,70 @@ namespace UZNRKT
         {
             InitializeComponent();
 
-            AutorizationUser();
+            //Окно загрузки (Т.к. БД может долго подключатся и приложение висит, то это окно будет сигнализировать о запуске приложения)
+            var loadingStatus = new Windows.LoadingApp();
+            loadingStatus.Show();
 
-            FoundApplicationInList(null, null, null, null);
+            CreateConnection();
 
-            LoadClientAndStatus();
+            //Закрытия окна загрузки
+            loadingStatus.Close();
+
+            if (AutorizationUser())
+            {
+                //Объявление таблиц
+                Table = new Tables(UsAc);
+
+                //Если пользователь был подключен
+                FoundApplicationInList(null, null, null, null);
+                LoadClientAndStatus();
+            }
         }
 
         /// <summary>
         /// Создание подключения
         /// </summary>
         /// <returns>Успех подключения</returns>
-        private bool CreateConnection()
-
+        private void CreateConnection()
         {
+            //Определение пути до БД
             try
             {
-                UsAc = new UsingAccess(BDWay, null, null, null);
-                return true;
+                //Чтение пути до БД из файла
+                string way = File.ReadAllLines("db.txt", Encoding.GetEncoding(1251))[0];
+                if (way != "")
+                {
+                    BDWay = way;
+                }
+            }
+            catch { }
+
+            //Подключение к БД
+            try
+            {
+                UsAc = new UsingAccess(BDWay, null, null, null)
+                {
+                    AutoOpen = true
+                };
             }
             catch
             {
                 try
                 {
-                    UsAc = new UsingAccess(BDWay, null, null, "install");
-                    return true;
+                    UsAc = new UsingAccess(BDWay, null, null, "install")
+                    {
+                        AutoOpen = true
+                    };
                 }
                 catch
                 {
-                    return false;
+                    MessageBox.Show("Не удалось подключится к базе данных, пожалуйста, обратитесь к администратору");
+                    this.Close();
+                    return;
                 }
             }
         }
+
         /// <summary>
         /// Событие при закрытии приложения
         /// </summary>
@@ -95,8 +127,9 @@ namespace UZNRKT
             Console.WriteLine("Событие закрытия окна");
 
             //Если подключения к БД нет или пользователь не авторизован - закрыть приложение без раздумий
-            if (UsAc == null || UserID == null)
+            if (UsAc == null || UserID == null || Table == null)
             {
+                e.Cancel = false;
                 return;
             }
 
@@ -116,32 +149,8 @@ namespace UZNRKT
         /// <summary>
         /// Подключение к БД и авторизация пользователя
         /// </summary>
-        private void AutorizationUser()
+        private bool AutorizationUser()
         {
-            Console.WriteLine("Подключение к БД");
-            //Подключение к БД
-            try
-            {
-                //Чтение пути до БД из файла
-                string way = File.ReadAllLines("db.txt", Encoding.GetEncoding(1251))[0];
-                if (way != "")
-                {
-                    BDWay = way;
-                }
-            }
-            catch { }
-            Console.WriteLine("Путь к БД: " + BDWay);
-            Console.WriteLine("Подключение к Access");
-            if (!CreateConnection())
-            {
-                //Если подключиться не удалось
-                MessageBox.Show("Не удалось подключится к базе данных, пожалуйста, обратитесь к администратору");
-                this.Close();
-                return;
-            }
-            UsAc.AutoOpen = true;
-            Console.WriteLine("Подключено");
-            Console.WriteLine("Авторизация");
             //Авторизация пользователя
             var window = new Windows.LoginPassword(UsAc);
             if (window.ShowDialog() == true)
@@ -160,11 +169,10 @@ namespace UZNRKT
             {
                 //Вход был отменен
                 this.Close();
-                return;
+                return false;
             }
 
-            //Объявление таблиц
-            Table = new Tables(UsAc);
+            return true;
         }
 
         /// <summary>
@@ -197,10 +205,6 @@ namespace UZNRKT
             }
 
         }
-
-
-
-
 
         /// <summary>
         /// Событие автогенерации колонок. Отлавливает и корректирует поля Даты.
@@ -242,7 +246,7 @@ namespace UZNRKT
             ClientList.Add("---");
 
             var tab = UsAc.Execute("SELECT FIO_Client FROM Clients");
-            for (int i = 0; i< tab.Count; i++)
+            for (int i = 0; i < tab.Count; i++)
             {
                 ClientList.Add(tab.Table.Rows[i]["FIO_Client"].ToString());
             }
