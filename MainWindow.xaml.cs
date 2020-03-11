@@ -50,6 +50,10 @@ namespace UZNRKT
         /// Путь до БД
         /// </summary>
         private string BDWay = Environment.CurrentDirectory + "\\db.accdb";
+        /// <summary>
+        /// Время авторизации пользователя
+        /// </summary>
+        private string TimeIn = null;
 
         public MainWindow()
         {
@@ -72,6 +76,8 @@ namespace UZNRKT
                 //Если пользователь был подключен
                 FoundApplicationInList(null, null, null, null);
                 LoadClientAndStatus();
+                LoadMenu();
+
             }
         }
 
@@ -124,8 +130,6 @@ namespace UZNRKT
         /// </summary>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Console.WriteLine("Событие закрытия окна");
-
             //Если подключения к БД нет или пользователь не авторизован - закрыть приложение без раздумий
             if (UsAc == null || UserID == null || Table == null)
             {
@@ -160,9 +164,7 @@ namespace UZNRKT
                 UserName = window.Login;
                 UserID = window.ID;
 
-                Console.WriteLine(UserRole);
-                Console.WriteLine(UserName);
-                Console.WriteLine(UserID);
+                AddLogToAutorization(1);
                 this.Show();
             }
             else
@@ -183,27 +185,32 @@ namespace UZNRKT
             MenuItem menuItem = (MenuItem)sender;
             switch (menuItem.Header.ToString())
             {
+                case "Заявки":
+                    F_Grid_Applications.Visibility = Visibility.Visible;
+                    F_Grid_Storage.Visibility = Visibility.Hidden;
+                    break;
+                case "Склад":
+                    F_Grid_Applications.Visibility = Visibility.Hidden;
+                    F_Grid_Storage.Visibility = Visibility.Visible;
+                    break;
                 case "О программе":
                     {
                         var InfoWindow = new Windows.AppInfo();
-                        Console.WriteLine("Открытие окна о программе");
                         InfoWindow.ShowDialog();
                     }
                     break;
                 case "Выход":
                     {
+                        AddLogToAutorization(0);
                         UserName = UserID = UserRole = null;
                         this.Hide();
-                        Console.WriteLine("Выход из учетки");
                         AutorizationUser();
                     }
                     break;
-
                 default:
                     MessageBox.Show(menuItem.Header.ToString());
                     break;
             }
-
         }
 
         /// <summary>
@@ -265,6 +272,51 @@ namespace UZNRKT
 
             F_Grid_Applications_Client.SelectedIndex = 0;
             F_Grid_Applications_Status.SelectedIndex = 0;
+        }
+
+        /// <summary>
+        /// Скрывает или делает доступным палень "Пользователи" в зависимости от роли.
+        /// </summary>
+        private void LoadMenu()
+        {
+            if (UserRole == "1")
+            {
+                F_Menu_UserItem.Visibility = Visibility.Visible;
+                F_Menu_UserItem.IsEnabled = true;
+            }
+            else if (UserRole == "2")
+            {
+                F_Menu_UserItem.Visibility = Visibility.Hidden;
+                F_Menu_UserItem.IsEnabled = false;
+            }
+        }
+
+        /// <summary>
+        /// Создает запись о том, что пользователь вошел в то или иное время
+        /// </summary>
+        /// <param name="InOut">1 - вход. 0 - выход</param>
+        private void AddLogToAutorization(int InOut)
+        {
+            if (UserID == null)
+            {
+                return;
+            }
+
+            try
+            {
+                if (InOut == 1)
+                {
+                    var time = DateTime.Now.ToString();
+                    UsAc.ExecuteNonQuery($@"INSERT INTO Log_avtorizatcii (ID_User, Time_in) VALUES ({UserID}, ""{time}"")");
+                    TimeIn = time;
+                }
+                else if (InOut == 0)
+                {
+                    UsAc.ExecuteNonQuery($@"UPDATE Log_avtorizatcii SET Time_out = ""{DateTime.Now.ToString()}"" WHERE Time_in = ""{TimeIn}""");
+                    TimeIn = null;
+                }
+            }
+            catch { }
         }
 
 
@@ -329,10 +381,10 @@ namespace UZNRKT
             //Получение результата
             if (AddApp.ShowDialog() == true)
             {
-            //    DateApplication = AddApp.DateApplication;
-            //    Client = AddApp.Client;
-            //    Type = AddApp.Type;
-            //    Producer = AddApp.Producer;
+                //    DateApplication = AddApp.DateApplication;
+                //    Client = AddApp.Client;
+                //    Type = AddApp.Type;
+                //    Producer = AddApp.Producer;
             }
             else
             {
@@ -340,9 +392,9 @@ namespace UZNRKT
                 return;
             }
 
-           // string request = $@"INSERT INTO Zayavki (Date_Zayavki, Client, Type_Tehniki_Zayavki, Izgotovitel) VALUES (""{DateApplication}"", {Client}, {Type}, {Producer})";
+            // string request = $@"INSERT INTO Zayavki (Date_Zayavki, Client, Type_Tehniki_Zayavki, Izgotovitel) VALUES (""{DateApplication}"", {Client}, {Type}, {Producer})";
 
-           // UsAc.ExecuteNonQuery(request);
+            // UsAc.ExecuteNonQuery(request);
         }
 
         /// <summary>
@@ -398,7 +450,7 @@ namespace UZNRKT
                     if (int.TryParse(ID_Application, out int num))
                     {
                         request += $@" and Zayavki.ID_Zayavki = {ID_Application}";
-                    }                    
+                    }
                 }
 
                 if (Date_Application != null && Date_Application != "")
@@ -423,6 +475,14 @@ namespace UZNRKT
 
             F_ListOfApplications.ItemsSource = Table.Zayavki.DVTable;
             Title_ApplicationsListCount = Table.Zayavki.DVTable.Count.ToString();
+        }
+
+        /// <summary>
+        /// События завершения работы приложения
+        /// </summary>
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            AddLogToAutorization(0);
         }
     }
 }
