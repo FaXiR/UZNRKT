@@ -41,50 +41,50 @@ namespace UZNRKT.Windows
             this.DialogResult = false;
         }
 
-        public string DateApplication
-        {
-            get
-            {
-                return F_DateApplication.Text;
-            }
-            set
-            {
-                F_DateApplication.Text = value;
-            }
-        }
-        public string Client
-        {
-            get
-            {
-                return F_Client.Text;
-            }
-            set
-            {
-                F_Client.Text = value;
-            }
-        }
-        public string Type
-        {
-            get
-            {
-                return F_Type.Text;
-            }
-            set
-            {
-                F_Type.Text = value;
-            }
-        }
-        public string Producer
-        {
-            get
-            {
-                return F_Producer.Text;
-            }
-            set
-            {
-                F_Producer.Text = value;
-            }
-        }
+        //public string DateApplication
+        //{
+        //    get
+        //    {
+        // //       return F_DateApplication.Text;
+        //    }
+        //    set
+        //    {
+        // //       F_DateApplication.Text = value;
+        //    }
+        //}
+        //public string Client
+        //{
+        //    get
+        //    {
+        // //       return F_Client.Text;
+        //    }
+        //    set
+        //    {
+        ////        F_Client.Text = value;
+        //    }
+        //}
+        //public string Type
+        //{
+        //    get
+        //    {
+        ////        return F_Type.Text;
+        //    }
+        //    set
+        //    {
+        ////        F_Type.Text = value;
+        //    }
+        //}
+        //public string Producer
+        //{
+        //    get
+        //    {
+        // //       return F_Producer.Text;
+        //    }
+        //    set
+        //    {
+        ////       F_Producer.Text = value;
+        //    }
+        //}
     }
 }
 

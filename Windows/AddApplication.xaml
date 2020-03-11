@@ -5,30 +5,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UZNRKT.Windows"
         mc:Ignorable="d"
-        Title="Создание заявки" Height="201" Width="301" ResizeMode="NoResize">
+        Title="Создание заявки" Height="1000" Width="1000" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="112"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="500"/>
+            <RowDefinition Height="500*"/>
         </Grid.RowDefinitions>
         <!-- Название колонок -->
         <StackPanel Grid.Row="0" Grid.Column="0">
-            <TextBlock Text="Дата заявки:" HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0"/>
-            <TextBlock Text="Клиент:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
-            <TextBlock Text="Тип техники:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0"/>
-            <TextBlock Text="Изготовитель:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0"/>
+            <TextBlock Text="Дата заявки:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
+            <TextBlock Text="ФИО мастера:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
+            <TextBlock Text="ФИО клиента:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
+            <TextBlock Text="Тип неисправности:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
+            <TextBlock Text="Изготовитель:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
+            <TextBlock Text="Модель:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
+            <TextBlock Text="Название услуги:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
+            <TextBlock Text="Кол-во деталей:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
+            <TextBlock Text="Деталь:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
+            <TextBlock Text="Статус выполнения:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
+            <TextBlock Text="Дата окончания:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
+            <TextBlock Text="Сумма:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
         </StackPanel>
 
         <!-- Поля ввода -->
         <StackPanel Grid.Row="0" Grid.Column="1">
-            <DatePicker x:Name="F_DateApplication" Height="24" Margin="0,4,0,0" IsTodayHighlighted="True"/>
-            <TextBox x:Name="F_Client" Height="24" Margin="0,4,0,0" FontSize="16"/>
-            <TextBox x:Name="F_Type" Height="24" Margin="0,4,0,0" FontSize="16"/>
-            <TextBox x:Name="F_Producer" Height="24" Margin="0,4,0,0" FontSize="16"/>
+            <TextBox Text="Дата заявки:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
+            <TextBox Text="ФИО мастера:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
+            <TextBox Text="ФИО клиента:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
+            <TextBox Text="Тип неисправности:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
+            <TextBox Text="Изготовитель:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
+            <TextBox Text="Модель:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
+            <TextBox Text="Название услуги:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
+            <TextBox Text="Кол-во деталей:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
+            <TextBox Text="Деталь:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
+            <TextBox Text="Статус выполнения:"  HorizontalAlignment="Right" Height="24" Margin="0,4,4,0" />
+            <TextBox Text="Дата окончания:"  HorizontalAlignment="Right" Height="24" Margin="0,4,4,0" />
+            <TextBox Text="Сумма:"  HorizontalAlignment="Right" Height="24" Margin="0,4,4,0" />
         </StackPanel>
         
         <!-- Кнопки -->

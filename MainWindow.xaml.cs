@@ -329,10 +329,10 @@ namespace UZNRKT
             //Получение результата
             if (AddApp.ShowDialog() == true)
             {
-                DateApplication = AddApp.DateApplication;
-                Client = AddApp.Client;
-                Type = AddApp.Type;
-                Producer = AddApp.Producer;
+            //    DateApplication = AddApp.DateApplication;
+            //    Client = AddApp.Client;
+            //    Type = AddApp.Type;
+            //    Producer = AddApp.Producer;
             }
             else
             {
@@ -340,9 +340,9 @@ namespace UZNRKT
                 return;
             }
 
-            string request = $@"INSERT INTO Zayavki (Date_Zayavki, Client, Type_Tehniki_Zayavki, Izgotovitel) VALUES (""{DateApplication}"", {Client}, {Type}, {Producer})";
+           // string request = $@"INSERT INTO Zayavki (Date_Zayavki, Client, Type_Tehniki_Zayavki, Izgotovitel) VALUES (""{DateApplication}"", {Client}, {Type}, {Producer})";
 
-            UsAc.ExecuteNonQuery(request);
+           // UsAc.ExecuteNonQuery(request);
         }
 
         /// <summary>
@@ -373,7 +373,7 @@ namespace UZNRKT
 
             try
             {
-                Table.Zayavki.DeleteFrom($@"ID_Zayavki = ""{ Title_SelectApplication}""");
+                Table.Zayavki.DeleteFrom($@"ID_Zayavki = {Title_SelectApplication}");
             }
             finally
             {
@@ -395,7 +395,10 @@ namespace UZNRKT
 
                 if (ID_Application != null && ID_Application != "")
                 {
-                    request += $@" and Zayavki.ID_Zayavki = {ID_Application}";
+                    if (int.TryParse(ID_Application, out int num))
+                    {
+                        request += $@" and Zayavki.ID_Zayavki = {ID_Application}";
+                    }                    
                 }
 
                 if (Date_Application != null && Date_Application != "")
