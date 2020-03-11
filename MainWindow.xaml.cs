@@ -371,31 +371,45 @@ namespace UZNRKT
         /// </summary>
         private void F_Grid_Applications_AddClick(object sender, RoutedEventArgs e)
         {
-            Windows.AddApplication AddApp = new Windows.AddApplication(UsAc);
-
-            string DateApplication;
-            string Client;
-            string Type;
-            string Producer;
+            Windows.AddApplication AddApp = new Windows.AddApplication(UsAc, null);
 
             //Получение результата
             if (AddApp.ShowDialog() == true)
             {
-                //    DateApplication = AddApp.DateApplication;
-                //    Client = AddApp.Client;
-                //    Type = AddApp.Type;
-                //    Producer = AddApp.Producer;
+
             }
             else
             {
                 MessageBox.Show("Запись была отменена");
                 return;
             }
-
-            // string request = $@"INSERT INTO Zayavki (Date_Zayavki, Client, Type_Tehniki_Zayavki, Izgotovitel) VALUES (""{DateApplication}"", {Client}, {Type}, {Producer})";
-
-            // UsAc.ExecuteNonQuery(request);
         }
+
+        /// <summary>
+        /// Событие нажатия кнопки редактирования записи
+        /// </summary>
+        private void F_Grid_Applications_EditClick(object sender, RoutedEventArgs e)
+        {
+            if (Title_SelectApplication == null)
+            {
+                return;
+            }
+
+            Windows.AddApplication AddApp = new Windows.AddApplication(UsAc, Title_SelectApplication);
+
+            //Получение результата
+            if (AddApp.ShowDialog() == true)
+            {
+
+            }
+            else
+            {
+                MessageBox.Show("Редактирование было отменено");
+                return;
+            }
+        }
+
+
 
         /// <summary>
         /// Событие нажатия кнопки сброса списка заявок

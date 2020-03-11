@@ -52,7 +52,7 @@
                 <!-- Взаимодействие кнопками -->
                 <Grid Grid.Row="3">
                     <Button Content="Создать заявку" Height="24" Width="100" Margin="4,0,0,0" HorizontalAlignment="Left" Click="F_Grid_Applications_AddClick"/>
-                    <Button Content="Редактировать" Height="24" Width="90" Margin="108,0,0,0" HorizontalAlignment="Left" Click="F_Grid_Applications_DeleteClick"/>
+                    <Button Content="Редактировать" Height="24" Width="90" Margin="108,0,0,0" HorizontalAlignment="Left" Click="F_Grid_Applications_EditClick"/>
                     <Button Content="Удалить" Height="24" Width="90" Margin="0,0,4,0" HorizontalAlignment="Right" Click="F_Grid_Applications_DeleteClick"/>
                 </Grid>
 

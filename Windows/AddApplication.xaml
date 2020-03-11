@@ -5,22 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UZNRKT.Windows"
         mc:Ignorable="d"
-        Title="Создание заявки" Height="1000" Width="1000" ResizeMode="NoResize">
+        Title="Создание заявки" Height="456" Width="320" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="500"/>
-            <RowDefinition Height="500*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        
         <!-- Название колонок -->
         <StackPanel Grid.Row="0" Grid.Column="0">
             <TextBlock Text="Дата заявки:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
             <TextBlock Text="ФИО мастера:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
             <TextBlock Text="ФИО клиента:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
-            <TextBlock Text="Тип неисправности:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
+            <TextBlock Text="Тип неисправности:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="8,4,4,0" />
+            <TextBlock Text="Тип техники:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="8,4,4,0" />
             <TextBlock Text="Изготовитель:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
             <TextBlock Text="Модель:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
             <TextBlock Text="Название услуги:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
@@ -28,29 +30,28 @@
             <TextBlock Text="Деталь:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
             <TextBlock Text="Статус выполнения:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
             <TextBlock Text="Дата окончания:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
-            <TextBlock Text="Сумма:"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
+            <TextBlock Text="Сумма (.руб):"  HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,4,4,0" />
         </StackPanel>
 
         <!-- Поля ввода -->
         <StackPanel Grid.Row="0" Grid.Column="1">
-            <TextBox Text="Дата заявки:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
-            <TextBox Text="ФИО мастера:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
-            <TextBox Text="ФИО клиента:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
-            <TextBox Text="Тип неисправности:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
-            <TextBox Text="Изготовитель:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
-            <TextBox Text="Модель:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
-            <TextBox Text="Название услуги:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
-            <TextBox Text="Кол-во деталей:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
-            <TextBox Text="Деталь:"  HorizontalAlignment="Right" Height="24"  Margin="0,4,4,0" />
-            <TextBox Text="Статус выполнения:"  HorizontalAlignment="Right" Height="24" Margin="0,4,4,0" />
-            <TextBox Text="Дата окончания:"  HorizontalAlignment="Right" Height="24" Margin="0,4,4,0" />
-            <TextBox Text="Сумма:"  HorizontalAlignment="Right" Height="24" Margin="0,4,4,0" />
+            <DatePicker x:Name="F_DataZayavki"  Width="140" HorizontalAlignment="Left" Height="24"  Margin="0,4,4,0" IsEnabled="False" />
+            <ComboBox x:Name="F_FIO_Master" Width="140" Text="ФИО мастера:"  HorizontalAlignment="Left" Height="24"  Margin="0,4,4,0" />
+            <ComboBox x:Name="F_FIO_Client" Width="140" Text="ФИО клиента:"  HorizontalAlignment="Left" Height="24"  Margin="0,4,4,0" />
+            <ComboBox x:Name="F_Type_neispravnosti"  Width="140" Text="Тип неисправности:"  HorizontalAlignment="Left" Height="24"  Margin="0,4,4,0" />
+            <ComboBox x:Name="F_Type_tehniki"  Width="140" Text="Тип неисправности:"  HorizontalAlignment="Left" Height="24"  Margin="0,4,4,0" />            
+            <ComboBox x:Name="F_Producer" Width="140" Text="Изготовитель:"  HorizontalAlignment="Left" Height="24"  Margin="0,4,4,0" />
+            <ComboBox x:Name="F_Model" Width="140" Text="Модель:"  HorizontalAlignment="Left" Height="24"  Margin="0,4,4,0" />
+            <ComboBox x:Name="F_NameUsligu" Width="140" Text="Название услуги:"  HorizontalAlignment="Left" Height="24"  Margin="0,4,4,0" />
+            <TextBox x:Name="F_DetalCount" Width="140" HorizontalAlignment="Left" Height="24" Margin="0,4,4,0" />
+            <ComboBox x:Name="F_DetalName" Width="140" Text="Деталь:"  HorizontalAlignment="Left" Height="24"  Margin="0,4,4,0" />
+            <ComboBox x:Name="F_Statys" Width="140" Text="Статус выполнения:"  HorizontalAlignment="Left" Height="24" Margin="0,4,4,0" />
+            <DatePicker x:Name="F_DataFinished" Width="140" HorizontalAlignment="Left" Height="24" Margin="0,4,4,0" />
+            <TextBox x:Name="F_Summ" Width="140" HorizontalAlignment="Left" Height="24" Margin="0,4,4,0" />
         </StackPanel>
         
         <!-- Кнопки -->
-        <Grid Grid.Row="1" Grid.ColumnSpan="2">
-            <Button Content="Добавить" Height="24" Width="100" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Left" Click="ButtonClick_add"/>
-            <Button Content="Отмена" Height="24" Width="100" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonClick_cancel"/>
-        </Grid>
-    </Grid>
+        <Button Grid.Row="1" Content="Добавить" Height="24" Width="90" Margin="10" VerticalAlignment="Bottom" HorizontalAlignment="Left" x:Name="F_Button_AddEdit" Click="ButtonClick_add"/>
+        <Button Grid.Row="1" Grid.Column="1" Content="Отмена" Height="24" Width="90" Margin="0,0,8,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="ButtonClick_cancel"/>
+    </Grid>    
 </Window>
