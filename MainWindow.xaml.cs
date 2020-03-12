@@ -78,8 +78,7 @@ namespace UZNRKT
                 //Если пользователь был подключен
                 FoundApplicationInList(null, null, null, null);
                 LoadClientAndStatus();
-                LoadMenu();
-
+                
                 //Выставление главной страницы
                 F_Grid_Applications.Visibility = Visibility.Visible;
                 F_Grid_Storage.Visibility = Visibility.Hidden;
@@ -170,6 +169,7 @@ namespace UZNRKT
                 UserName = window.Login;
                 UserID = window.ID;
 
+                LoadMenu();
                 AddLogToAutorization(1);
                 this.Show();
             }
