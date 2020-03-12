@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CourseProject.Modules;
 using KursProject.Modules;
+using Microsoft.Win32;
 using UZNRKT.Modules;
 
 namespace UZNRKT
@@ -208,6 +210,11 @@ namespace UZNRKT
                     F_Grid_Storage.Visibility = Visibility.Hidden;
                     F_Grid_User.Visibility = Visibility.Visible;
                     break;
+                case "Печать":
+                    Table.Zayavki.UpdateTable();
+                    OutToExcell("Список заявок", Table.Zayavki.DVTable);
+                    break;
+
                 case "О программе":
                     {
                         var InfoWindow = new Windows.AppInfo();
@@ -425,8 +432,6 @@ namespace UZNRKT
             }
         }
 
-
-
         /// <summary>
         /// Событие нажатия кнопки сброса списка заявок
         /// </summary>
@@ -513,6 +518,74 @@ namespace UZNRKT
         private void Window_Closed(object sender, EventArgs e)
         {
             AddLogToAutorization(0);
+        }
+
+        /// <summary>
+        /// Вывод таблицы в эксель
+        /// </summary>
+        private void OutToExcell(string title, DataView table)
+        {
+            SaveFileDialog sv = new SaveFileDialog();
+            sv.Filter = "Excel файлы|*.xlsx|Все файлы|*.*";
+            if (sv.ShowDialog() == false)
+            {
+                return;
+            }
+            string filename = sv.FileName;
+
+            var excelapp = new Microsoft.Office.Interop.Excel.Application();
+            var workbook = excelapp.Workbooks.Add();
+            Microsoft.Office.Interop.Excel.Worksheet worksheet = workbook.ActiveSheet;
+
+            //Получение названий колонок
+            var ColumnName = new List<string>();
+            for (int i = 0; i < table.Table.Columns.Count; i++)
+            {
+                ColumnName.Add(table.Table.Columns[i].ToString());
+            }
+            //Выводим название колонок
+            for (int x = 0; x < ColumnName.Count; x++)
+            {
+                worksheet.Rows[2].Columns[x + 1] = ColumnName[x];
+            }
+            //заполням ячейки
+            for (int y = 3; y < table.Count + 3; y++)
+            {
+                for (int x = 0; x < ColumnName.Count; x++)
+                {
+                    worksheet.Rows[y].Columns[x + 1] = table.Table.Rows[y - 3][ColumnName[x]];
+                }
+            }
+
+            // Выделяем диапазон ячеек от A1 до нужной         
+            Microsoft.Office.Interop.Excel.Range _excelCells1 = (Microsoft.Office.Interop.Excel.Range)worksheet.get_Range((Microsoft.Office.Interop.Excel.Range)worksheet.Cells[1, 1], (Microsoft.Office.Interop.Excel.Range)worksheet.Cells[1, ColumnName.Count]).Cells;
+            // Производим объединение
+            _excelCells1.Merge(Type.Missing);
+            //Задаем титульник
+            worksheet.Cells[1, 1] = title;
+            //Размер текста
+            _excelCells1.Cells.Font.Size = 16;
+            //Выравнивание
+            _excelCells1.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            //Задание bold для текста
+            _excelCells1.Font.Bold = true;
+
+            //Выделение всех ячеек
+            Microsoft.Office.Interop.Excel.Range _excelCells2 = (Microsoft.Office.Interop.Excel.Range)worksheet.get_Range((Microsoft.Office.Interop.Excel.Range)worksheet.Cells[1, 1], (Microsoft.Office.Interop.Excel.Range)worksheet.Cells[table.Count + 2, ColumnName.Count]).Cells;
+
+            //Выставление линий 
+            _excelCells2.Borders.get_Item(Microsoft.Office.Interop.Excel.XlBordersIndex.xlEdgeBottom).LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+            _excelCells2.Borders.get_Item(Microsoft.Office.Interop.Excel.XlBordersIndex.xlEdgeRight).LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+            _excelCells2.Borders.get_Item(Microsoft.Office.Interop.Excel.XlBordersIndex.xlInsideHorizontal).LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+            _excelCells2.Borders.get_Item(Microsoft.Office.Interop.Excel.XlBordersIndex.xlInsideVertical).LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+            _excelCells2.Borders.get_Item(Microsoft.Office.Interop.Excel.XlBordersIndex.xlEdgeTop).LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+
+            excelapp.AlertBeforeOverwriting = false;
+            workbook.SaveAs(filename);
+            excelapp.Quit();
+
+            //TODO: запускаем
+            Process.Start(filename);
         }
     }
 }
