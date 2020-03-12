@@ -83,10 +83,21 @@
                     </StackPanel>
                 </Grid>
             </Grid>
-            
+
             <!-- Склад -->
             <Grid x:Name="F_Grid_Storage" Visibility="Hidden">
                 <TextBlock Text="Склад"/>
+            </Grid>
+
+            <!-- Пользователи -->
+            <Grid x:Name="F_Grid_User" Visibility="Visible">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1">
+                    <DataGrid HorizontalAlignment="Right" Margin="4" Grid.Row="2" x:Name="F_TimeAutorization" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" />
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

@@ -78,6 +78,10 @@ namespace UZNRKT
                 LoadClientAndStatus();
                 LoadMenu();
 
+                //Выставление главной страницы
+                F_Grid_Applications.Visibility = Visibility.Visible;
+                F_Grid_Storage.Visibility = Visibility.Hidden;
+                F_Grid_User.Visibility = Visibility.Hidden;
             }
         }
 
@@ -188,10 +192,21 @@ namespace UZNRKT
                 case "Заявки":
                     F_Grid_Applications.Visibility = Visibility.Visible;
                     F_Grid_Storage.Visibility = Visibility.Hidden;
+                    F_Grid_User.Visibility = Visibility.Hidden;
                     break;
                 case "Склад":
                     F_Grid_Applications.Visibility = Visibility.Hidden;
                     F_Grid_Storage.Visibility = Visibility.Visible;
+                    F_Grid_User.Visibility = Visibility.Hidden;
+                    break;
+                case "Пользователи":
+                    //Обновление данных в таблице
+                    Table.AutorizationTime.UpdateTable();
+                    F_TimeAutorization.ItemsSource = Table.AutorizationTime.DVTable;
+
+                    F_Grid_Applications.Visibility = Visibility.Hidden;
+                    F_Grid_Storage.Visibility = Visibility.Hidden;
+                    F_Grid_User.Visibility = Visibility.Visible;
                     break;
                 case "О программе":
                     {
@@ -283,6 +298,7 @@ namespace UZNRKT
             {
                 F_Menu_UserItem.Visibility = Visibility.Visible;
                 F_Menu_UserItem.IsEnabled = true;
+                F_TimeAutorization.ItemsSource = Table.AutorizationTime.DVTable;
             }
             else if (UserRole == "2")
             {
