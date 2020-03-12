@@ -89,6 +89,63 @@
                 <TextBlock Text="Склад"/>
             </Grid>
 
+            <!-- Справочники -->
+            <Grid x:Name="F_Grid_Handbooks" Visibility="Hidden">
+                <WrapPanel>
+
+                    <Grid Margin="6">
+                        <TextBlock Text="Сотрдуники/Мастера" Height="24"/>
+                        <DataGrid x:Name="F_DataGrid_Sotrudniki" Margin="0,28,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
+                    </Grid>
+
+                    <Grid Margin="6">
+                        <TextBlock Text="Сотрдуники/Мастера" Height="24"/>
+                        <DataGrid x:Name="F_DataGrid_Neispravnosti" Margin="0,28,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
+                    </Grid>
+
+                    <Grid Margin="6">
+                        <TextBlock Text="Сотрдуники/Мастера" Height="24"/>
+                        <DataGrid x:Name="F_DataGrid_Izgotovitel" Margin="0,28,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
+                    </Grid>
+
+                    <Grid Margin="6">
+                        <TextBlock Text="Сотрдуники/Мастера" Height="24"/>
+                        <DataGrid x:Name="F_DataGrid_Services" Margin="0,28,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
+                    </Grid>
+
+                    <Grid Margin="6">
+                        <TextBlock Text="Сотрдуники/Мастера" Height="24"/>
+                        <DataGrid x:Name="F_DataGrid_Statys" Margin="0,28,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
+                    </Grid>
+
+                    <Grid Margin="6">
+                        <TextBlock Text="Сотрдуники/Мастера" Height="24"/>
+                        <DataGrid x:Name="F_DataGrid_Postavchiki" Margin="0,28,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
+                    </Grid>
+
+                    <Grid Margin="6">
+                        <TextBlock Text="Сотрдуники/Мастера" Height="24"/>
+                        <DataGrid x:Name="F_DataGrid_Clients" Margin="0,28,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
+                    </Grid>
+
+                    <Grid Margin="6">
+                        <TextBlock Text="Сотрдуники/Мастера" Height="24"/>
+                        <DataGrid x:Name="F_DataGrid_TypeTehniki" Margin="0,28,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
+                    </Grid>
+
+                    <Grid Margin="6">
+                        <TextBlock Text="Сотрдуники/Мастера" Height="24"/>
+                        <DataGrid x:Name="F_DataGrid_Oborudovanie" Margin="0,28,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
+                    </Grid>
+
+                    <Grid Margin="6">
+                        <TextBlock Text="Сотрдуники/Мастера" Height="24"/>
+                        <DataGrid x:Name="F_DataGrid_TMC" Margin="0,28,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
+                    </Grid>
+                </WrapPanel>
+            </Grid>
+
+            
             <!-- Пользователи -->
             <Grid x:Name="F_Grid_User" Visibility="Visible">
                 <Grid.ColumnDefinitions>
