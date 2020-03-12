@@ -50,7 +50,7 @@ namespace UZNRKT.Windows
             }
             else
             {
-                F_DataZayavki.Text = DateTime.Now.ToString();
+                F_DataZayavki.Text = DateTime.Now.ToShortDateString();
                 F_Button_AddEdit.Content = "Добавить";
                 Title = "Создание заявки";
             }
@@ -58,6 +58,11 @@ namespace UZNRKT.Windows
 
         private void ButtonClick_add(object sender, RoutedEventArgs e)
         {
+            bool AutoOpenInUsAc = UsAc.AutoOpen;
+
+            UsAc.AutoOpen = false;
+            UsAc.ConnectOpen();
+            
             if (F_Button_AddEdit.Content.ToString() == "Добавить")
             {
                 AddNewApplication();
@@ -66,6 +71,9 @@ namespace UZNRKT.Windows
             {
                 SaveApplication();
             }
+
+            UsAc.ConnectClose();
+            UsAc.AutoOpen = AutoOpenInUsAc;
 
             this.DialogResult = true;
         }
@@ -168,49 +176,106 @@ namespace UZNRKT.Windows
         {
             string value = null;
 
-            //Date_Zayavki, 
-            //Master,
-            //Client, 
-            //Neispravnost_Zayavki, 
-            //Type_Tehniki_Zayavki,
-            //Izgotovitel,
-            //ID_Oborudovaniya,
-            //Services,
-            //KolvoServ,
-            //Materiali,
-            //Statys, 
-            //Date_okonchaniya_Zayavki,
-
             string From = null;
             string Values = null;
 
-            if (($@"""{F_DataZayavki.Text}"",").Replace(",","").Length == 0)
+            value = F_DataZayavki.Text;
+            if (value.Length != 0)
             {
-                return;
+                From += "Date_Zayavki";
+                Values += $@"""{F_DataZayavki.Text}"""; 
             }
 
-            if ((GetId("Sotrudniki", "ID_Master", F_FIO_Master.SelectedItem.ToString(), "FIO_Master") + ",").Replace(",", "").Length == 0)
+            value = F_FIO_Master.Text;
+            if (value != "---")
             {
-                return;
+                From += ",Master";
+                Values += "," + GetId("Sotrudniki", "ID_Master", F_FIO_Master.SelectedItem.ToString(), "FIO_Master");
             }
 
-            return;
+            value = F_FIO_Client.Text;
+            if (value != "---")
+            {
+                From += ",Client";
+                Values += "," + GetId("Clients", "ID_Client", F_FIO_Client.SelectedItem.ToString(), "FIO_Client");
+            }
 
-            //request += 
-            //request += GetId("Sotrudniki", "ID_Master", F_FIO_Master.SelectedItem.ToString(), "FIO_Master") + ",";
-            //request += GetId("Clients", "ID_Client", F_FIO_Client.SelectedItem.ToString(), "FIO_Client") + ",";
-            //request += GetId("Neispravnosti", "ID_Neispravnosti", F_Type_neispravnosti.SelectedItem.ToString(), "Naimenovanie") + ",";
-            //request += GetId("TypeTehniki", "ID_TypeTehniki", F_Type_tehniki.SelectedItem.ToString(), "Type_TypeTehniki") + ",";
-            //request += GetId("Izgotovitel", "ID_Izgotovitel", F_Producer.SelectedItem.ToString(), "Nazvanie_Izgotovitel") + ",";
-            //request += GetId("Oborudovanie", "ID_Oborudovaniya", F_Model.SelectedItem.ToString(), "Model") + ",";
-            //request += GetId("Services", "ID_Services", F_NameUsligu.SelectedItem.ToString(), "Nazvanie_Services") + ",";
-            //request += Convert.ToInt32(("0" + F_DetalCount.Text)).ToString() + ",";
-            //request += GetId("TMC", "ID_TMC", F_DetalName.SelectedItem.ToString(), "Nazvanie_TMC") + ",";
-            //request += GetId("Statys", "ID_Statys", F_Statys.SelectedItem.ToString(), "Statys_Statys") + ",";
-            //request += $@"""{F_DataFinished.Text}"",";
-            //request += $@"""{F_Summ.Text}"")";
+            value = F_Type_neispravnosti.Text;
+            if (value != "---")
+            {
+                From += ",Neispravnost_Zayavki";
+                Values += "," + GetId("Neispravnosti", "ID_Neispravnosti", F_Type_neispravnosti.SelectedItem.ToString(), "Naimenovanie");
+            }
 
-       //     UsAc.ExecuteNonQuery($@"INSERT INTO Zayavki ({From}) VALUES ({Values})";
+            value = F_Type_tehniki.Text;
+            if (value != "---")
+            {
+                From += ",Type_Tehniki_Zayavki";
+                Values += "," + GetId("TypeTehniki", "ID_TypeTehniki", F_Type_tehniki.SelectedItem.ToString(), "Type_TypeTehniki");
+
+            }
+
+            value = F_Producer.Text;
+            if (value != "---")
+            {
+                From += ",Izgotovitel";
+                Values += "," + GetId("Izgotovitel", "ID_Izgotovitel", F_Producer.SelectedItem.ToString(), "Nazvanie_Izgotovitel");
+                ;
+            }
+
+            value = F_Model.Text;
+            if (value != "---")
+            {
+                From += ",ID_Oborudovaniya";
+                Values += "," + GetId("Oborudovanie", "ID_Oborudovaniya", F_Model.SelectedItem.ToString(), "Model");
+
+            }
+
+            value = F_NameUsligu.Text;
+            if (value != "---")
+            {
+                From += ",Services";
+                Values += "," + GetId("Services", "ID_Services", F_NameUsligu.SelectedItem.ToString(), "Nazvanie_Services");
+
+            }
+
+            value = F_DetalCount.Text;
+            if (value.Length != 0)
+            {
+                From += ",KolvoServ";
+                Values += "," + F_DetalCount.Text;
+            }
+
+            value = F_DetalName.Text;
+            if (value != "---")
+            {
+                From += ",Materiali";
+                Values += "," + GetId("TMC", "ID_TMC", F_DetalName.SelectedItem.ToString(), "Nazvanie_TMC");
+
+            }
+
+            value = F_Statys.Text;
+            if (value != "---")
+            {
+                From += ",Statys";
+                Values += "," + GetId("Statys", "ID_Statys", F_Statys.SelectedItem.ToString(), "Statys_Statys");
+            }
+
+            value = F_DataFinished.Text;
+            if (value.Length != 0)
+            {
+                From += ",Date_okonchaniya_Zayavki";
+                Values += "," + $@"""{F_DataFinished.Text}""";
+            }
+
+            value = F_Summ.Text;
+            if (value.Length != 0)
+            {
+                From += ",Summa";
+                Values += "," + $@"""{F_Summ.Text}""";
+            }
+
+            UsAc.ExecuteNonQuery($@"INSERT INTO Zayavki ({From}) VALUES ({Values})");
         }
 
         /// <summary>
