@@ -69,6 +69,9 @@
     <Compile Include="Windows\AddApplication.xaml.cs">
       <DependentUpon>AddApplication.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\AddToHandbook.xaml.cs">
+      <DependentUpon>AddToHandbook.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\AppInfo.xaml.cs">
       <DependentUpon>AppInfo.xaml</DependentUpon>
     </Compile>
@@ -91,6 +94,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Windows\AddApplication.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AddToHandbook.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

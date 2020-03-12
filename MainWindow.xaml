@@ -91,56 +91,33 @@
 
             <!-- Справочники -->
             <Grid x:Name="F_Grid_Handbooks" Visibility="Hidden">
-                <WrapPanel>
-
-                    <Grid Margin="4">
-                        <TextBlock Text="Сотрдуники/Мастера" Height="24" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                        <DataGrid x:Name="F_DataGrid_Sotrudniki" Margin="0,24,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
-                    </Grid>
-
-                    <Grid Margin="4">
-                        <TextBlock Text="Типы неисправности" Height="24" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                        <DataGrid x:Name="F_DataGrid_Neispravnosti" Margin="0,24,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
-                    </Grid>
-
-                    <Grid Margin="4">
-                        <TextBlock Text="Изготовители" Height="24" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                        <DataGrid x:Name="F_DataGrid_Izgotovitel" Margin="0,24,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
-                    </Grid>
-
-                    <Grid Margin="4">
-                        <TextBlock Text="Услуги" Height="24" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                        <DataGrid x:Name="F_DataGrid_Services" Margin="0,24,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
-                    </Grid>
-
-                    <Grid Margin="4">
-                        <TextBlock Text="Статус заявки" Height="24" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                        <DataGrid x:Name="F_DataGrid_Statys" Margin="0,24,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
-                    </Grid>
-
-                    <Grid Margin="4">
-                        <TextBlock Text="Тип техники" Height="24" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                        <DataGrid x:Name="F_DataGrid_TypeTehniki" Margin="0,24,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
-                    </Grid>
-
-                    <Grid Margin="4">
-                        <TextBlock Text="Обордуование" Height="24" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                        <DataGrid x:Name="F_DataGrid_Oborudovanie" Margin="0,24,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
-                    </Grid>
-
-                    <Grid Margin="4">
-                        <TextBlock Text="Должности" Height="24" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                        <DataGrid x:Name="F_DataGrid_Doljnosti" Margin="0,24,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
-                    </Grid>
-
-                    <Grid Margin="4">
-                        <TextBlock Text="Договора о поставке" Height="24" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                        <DataGrid x:Name="F_DataGrid_DogovorOPostavke" Margin="0,24,0,0" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
-                    </Grid>
-                </WrapPanel>
+                <TextBlock Text="Справочники" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,4,0,0"/>
+                <ListBox x:Name="F_ListBox_Handbooks" SelectionChanged="ListBox_SelectedItemChanged" HorizontalAlignment="Left" Height="148" Margin="6,24,0,0" VerticalAlignment="Top">
+                    <System:String>Сотрудники/Мастера</System:String>
+                    <System:String>Тип неисправности</System:String>
+                    <System:String>Изготовители</System:String>
+                    <System:String>Услуги</System:String>
+                    <System:String>Стутс заявки</System:String>
+                    <System:String>Тип техники</System:String>
+                    <System:String>Оборудование</System:String>
+                    <System:String>Договора о поставке</System:String>
+                    <System:String>Должности</System:String>
+                </ListBox>
+                <Button x:Name="F_Grid_Handbooks_AddButton" Margin="6,178,0,0" Content="Добавить запись" Width="123" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Click="F_Grid_Handbooks_Add"/>
+                <!--  <Button x:Name="F_Grid_Handbooks_EditButton" Margin="6,234,0,0" Content="Редактировать" Width="123" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Click="F_Grid_Handbooks_Edit" IsEnabled="False"/> -->
+                <Button x:Name="F_Grid_Handbooks_DeleteButton" Margin="6,206,0,0" Content="Удалить запись" Width="123" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Click="F_Grid_Handbooks_Delete"/>
+                <StackPanel Margin="146,4,0,0" Orientation="Horizontal">
+                    <TextBlock Text="Справочник:" FontWeight="Bold"/>
+                    <TextBlock Margin="4,0,4,0" x:Name="F_Grid_Handbooks_SelectHandbooks"/>
+                </StackPanel>
+                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,4,6,0" Orientation="Horizontal" x:Name="F_Grid_Handbooks_SelectHandbooksStackPanel" Visibility="Hidden">
+                    <TextBlock Text="Выбрана запись:" FontWeight="Bold"/>
+                    <TextBlock Margin="4,0,0,0" x:Name="F_Grid_Handbooks_SelectHandbooksIndex"/>
+                </StackPanel>
+                <DataGrid Margin="140,24,6,6" x:Name="F_DataGrid_Handbook" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False" SelectedCellsChanged="DataGrid_SelectedCellsChangedInHandbooks"/>
             </Grid>
 
-            
+
             <!-- Пользователи -->
             <Grid x:Name="F_Grid_User" Visibility="Visible">
                 <Grid.ColumnDefinitions>
