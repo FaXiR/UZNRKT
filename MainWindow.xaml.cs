@@ -72,11 +72,9 @@ namespace UZNRKT
 
             //Объявление таблиц
             Table = new Tables(UsAc);
-
-            if (AutorizationUser())
-            {
-                               
-            }
+            
+            //Авторизация
+            AutorizationUser();            
         }
 
         /// <summary>
@@ -627,13 +625,23 @@ namespace UZNRKT
 
         private void LoadAllHandbooks()
         {
+            F_DataGrid_Sotrudniki.ItemsSource = new UsingDataView(UsAc, "*", "Sotrudniki", null, null).DVTable;
+            F_DataGrid_Neispravnosti.ItemsSource = new UsingDataView(UsAc, "*", "Neispravnosti", null, null).DVTable;
+            F_DataGrid_Izgotovitel.ItemsSource = new UsingDataView(UsAc, "*", "Izgotovitel", null, null).DVTable;
+            F_DataGrid_Services.ItemsSource = new UsingDataView(UsAc, "*", "Services", null, null).DVTable;
+            F_DataGrid_Statys.ItemsSource = new UsingDataView(UsAc, "*", "Statys", null, null).DVTable;
+            F_DataGrid_TypeTehniki.ItemsSource = new UsingDataView(UsAc, "*", "TypeTehniki", null, null).DVTable;
+            F_DataGrid_Oborudovanie.ItemsSource = new UsingDataView(UsAc, "*", "Oborudovanie", null, null).DVTable;
+            F_DataGrid_Doljnosti.ItemsSource = new UsingDataView(UsAc, "*", "Doljnosti", null, null).DVTable;
 
-
-
-
-
-
-
+            if (UserRole == "1")
+            {
+                F_DataGrid_Doljnosti.IsEnabled = true;
+            }
+            else if (UserRole == "2")
+            {
+                F_DataGrid_Doljnosti.IsEnabled = false;
+            }
         }
     }
 }
