@@ -62,7 +62,7 @@ namespace UZNRKT.Windows
 
             UsAc.AutoOpen = false;
             UsAc.ConnectOpen();
-            
+
             if (F_Button_AddEdit.Content.ToString() == "Добавить")
             {
                 AddNewApplication();
@@ -183,7 +183,7 @@ namespace UZNRKT.Windows
             if (value.Length != 0)
             {
                 From += "Date_Zayavki";
-                Values += $@"""{F_DataZayavki.Text}"""; 
+                Values += $@"""{F_DataZayavki.Text}""";
             }
 
             value = F_FIO_Master.Text;
@@ -283,7 +283,140 @@ namespace UZNRKT.Windows
         /// </summary>
         private void SaveApplication()
         {
+            string value = null;
+            string set = null;
 
+            value = F_DataZayavki.Text;
+            if (value.Length != 0)
+            {
+                set += $@"Date_Zayavki = ""{F_DataZayavki.Text}"",";
+            }
+            else
+            {
+                set += $@"Date_Zayavki = null,";
+            }
+
+            value = F_FIO_Master.Text;
+            if (value != "---")
+            {
+                set += $@"Master = {GetId("Sotrudniki", "ID_Master", F_FIO_Master.SelectedItem.ToString(), "FIO_Master")},";
+            }
+            else
+            {
+                set += $@"Master = null,";
+            }
+
+            value = F_FIO_Client.Text;
+            if (value != "---")
+            {
+                set += $@"Client = {GetId("Clients", "ID_Client", F_FIO_Client.SelectedItem.ToString(), "FIO_Client")},";
+            }
+            else
+            {
+                set += $@"Client = null,";
+            }
+
+            value = F_Type_neispravnosti.Text;
+            if (value != "---")
+            {
+                set += $@"Neispravnost_Zayavki = {GetId("Neispravnosti", "ID_Neispravnosti", F_Type_neispravnosti.SelectedItem.ToString(), "Naimenovanie")},";
+            }
+            else
+            {
+                set += $@"Neispravnost_Zayavki = null,";
+            }
+
+            value = F_Type_tehniki.Text;
+            if (value != "---")
+            {
+                set += $@"Type_Tehniki_Zayavki = {GetId("TypeTehniki", "ID_TypeTehniki", F_Type_tehniki.SelectedItem.ToString(), "Type_TypeTehniki")},";
+            }
+            else
+            {
+                set += $@"Type_Tehniki_Zayavki = null,";
+            }
+
+            value = F_Producer.Text;
+            if (value != "---")
+            {
+                set += $@"Izgotovitel = {GetId("Izgotovitel", "ID_Izgotovitel", F_Producer.SelectedItem.ToString(), "Nazvanie_Izgotovitel")},";
+            }
+            else
+            {
+                set += $@"Izgotovitel = null,";
+            }
+
+            value = F_Model.Text;
+            if (value != "---")
+            {
+                set += $@"ID_Oborudovaniya = {GetId("Oborudovanie", "ID_Oborudovaniya", F_Model.SelectedItem.ToString(), "Model")},";
+            }
+            else
+            {
+                set += $@"ID_Oborudovaniya = null,";
+            }
+
+            value = F_NameUsligu.Text;
+            if (value != "---")
+            {
+                set += $@"Services = {GetId("Services", "ID_Services", F_NameUsligu.SelectedItem.ToString(), "Nazvanie_Services")},";
+            }
+            else
+            {
+                set += $@"Services = null,";
+            }
+
+            value = F_DetalCount.Text;
+            if (value.Length != 0)
+            {
+                set += $@"KolvoServ = {F_DetalCount.Text},";
+            }
+            else
+            {
+                set += $@"KolvoServ = 0,";
+            }
+
+            value = F_DetalName.Text;
+            if (value != "---")
+            {
+                set += $@"Materiali = {GetId("TMC", "ID_TMC", F_DetalName.SelectedItem.ToString(), "Nazvanie_TMC")},";
+            }
+            else
+            {
+                set += $@"Materiali = null,";
+            }
+
+            value = F_Statys.Text;
+            if (value != "---")
+            {
+                set += $@"Statys = {GetId("Statys", "ID_Statys", F_Statys.SelectedItem.ToString(), "Statys_Statys")},";
+            }
+            else
+            {
+                set += $@"Statys = null,";
+            }
+
+            value = F_DataFinished.Text;
+            if (value.Length != 0)
+            {
+                set += $@"Date_okonchaniya_Zayavki = ""{F_DataFinished.Text}"",";
+            }
+            else
+            {
+                set += $@"Date_okonchaniya_Zayavki = null,";
+            }
+
+            value = F_Summ.Text;
+            if (value.Length != 0)
+            {
+                set += $@"Summa = ""{F_Summ.Text}""";
+            }
+            else
+            {
+                set += $@"Summa = null";
+            }
+
+            UsAc.ExecuteNonQuery($@"UPDATE Zayavki SET {set} WHERE ID_Zayavki = {ID}");
         }
 
         private string GetId(string table, string idInColumn, string foundWord, string FoundInColumn)
