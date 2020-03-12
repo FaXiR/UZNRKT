@@ -70,21 +70,11 @@ namespace UZNRKT
             //Закрытия окна загрузки
             loadingStatus.Close();
 
-            if (AutorizationUser())
-            {
-                //Объявление таблиц
-                Table = new Tables(UsAc);
-
-                //Если пользователь был подключен
-                FoundApplicationInList(null, null, null, null);
-                LoadClientAndStatus();
-                LoadMenu();
-
-                //Выставление главной страницы
-                F_Grid_Applications.Visibility = Visibility.Visible;
-                F_Grid_Storage.Visibility = Visibility.Hidden;
-                F_Grid_User.Visibility = Visibility.Hidden;
-            }
+            //Объявление таблиц
+            Table = new Tables(UsAc);
+            
+            //Авторизация
+            AutorizationUser();            
         }
 
         /// <summary>
@@ -170,7 +160,25 @@ namespace UZNRKT
                 UserName = window.Login;
                 UserID = window.ID;
 
+                //Определение доступных пунктов
+                LoadMenu();
+                //Запись времени авторизации
                 AddLogToAutorization(1);
+
+                //Обновляет таблицу заявок
+                FoundApplicationInList(null, null, null, null);
+
+                //Определяет доступных клиентов и статусы 
+                LoadClientAndStatus();
+
+                //Загрузка справочников
+                LoadAllHandbooks();
+
+                //Выставление главной страницы
+                F_Grid_Applications.Visibility = Visibility.Visible;
+                F_Grid_Storage.Visibility = Visibility.Hidden;
+                F_Grid_User.Visibility = Visibility.Hidden;
+                F_Grid_Handbooks.Visibility = Visibility.Hidden;
                 this.Show();
             }
             else
@@ -195,26 +203,24 @@ namespace UZNRKT
                     F_Grid_Applications.Visibility = Visibility.Visible;
                     F_Grid_Storage.Visibility = Visibility.Hidden;
                     F_Grid_User.Visibility = Visibility.Hidden;
+                    F_Grid_Handbooks.Visibility = Visibility.Hidden;
                     break;
                 case "Склад":
                     F_Grid_Applications.Visibility = Visibility.Hidden;
                     F_Grid_Storage.Visibility = Visibility.Visible;
                     F_Grid_User.Visibility = Visibility.Hidden;
+                    F_Grid_Handbooks.Visibility = Visibility.Hidden;
                     break;
-                case "Пользователи":
-                    //Обновление данных в таблице
-                    Table.AutorizationTime.UpdateTable();
-                    F_TimeAutorization.ItemsSource = Table.AutorizationTime.DVTable;
-
+                case "Справочники":
                     F_Grid_Applications.Visibility = Visibility.Hidden;
                     F_Grid_Storage.Visibility = Visibility.Hidden;
-                    F_Grid_User.Visibility = Visibility.Visible;
+                    F_Grid_User.Visibility = Visibility.Hidden;
+                    F_Grid_Handbooks.Visibility = Visibility.Visible;
                     break;
                 case "Печать":
                     Table.Zayavki.UpdateTable();
                     OutToExcell("Список заявок", Table.Zayavki.DVTable);
                     break;
-
                 case "О программе":
                     {
                         var InfoWindow = new Windows.AppInfo();
@@ -228,6 +234,16 @@ namespace UZNRKT
                         this.Hide();
                         AutorizationUser();
                     }
+                    break;
+                case "Пользователи":
+                    //Обновление данных в таблице
+                    Table.AutorizationTime.UpdateTable();
+                    F_TimeAutorization.ItemsSource = Table.AutorizationTime.DVTable;
+
+                    F_Grid_Applications.Visibility = Visibility.Hidden;
+                    F_Grid_Storage.Visibility = Visibility.Hidden;
+                    F_Grid_User.Visibility = Visibility.Visible;
+                    F_Grid_Handbooks.Visibility = Visibility.Hidden;
                     break;
                 default:
                     MessageBox.Show(menuItem.Header.ToString());
@@ -265,6 +281,25 @@ namespace UZNRKT
                 Title_SelectApplication = ((DataView)DG.ItemsSource).Table.Rows[index]["ID заявки"].ToString();
             }
         }
+
+
+        /// <summary>
+        /// Событие клика по записи в справочниках. Задает index выбранной записи
+        /// </summary>
+        private void DataGrid_SelectedCellsChangedInHandbooks(object sender, SelectedCellsChangedEventArgs e)
+        {
+            return;
+
+            DataGrid DG = (DataGrid)sender;
+            string name = DG.Name;
+            int index = DG.SelectedIndex;
+            if (index == -1)
+                Title_SelectApplication = null;
+            else
+                Title_SelectApplication = ((DataView)DG.ItemsSource).Table.Rows[index]["ID заявки"].ToString();
+        }
+
+
 
         /// <summary>
         /// Подргужает известных клиентов и статусы в F_Grid_Applications_Client и F_Grid_Applications_Status
@@ -460,7 +495,7 @@ namespace UZNRKT
 
             try
             {
-                Table.Zayavki.DeleteFrom($@"ID_Zayavki = {Title_SelectApplication}");
+                UsAc.ExecuteNonQuery($@"DELETE FROM Zayavki Where ID_Zayavki = {Title_SelectApplication}");
             }
             finally
             {
@@ -585,6 +620,28 @@ namespace UZNRKT
             //Отображаем Excel
             excelapp.AlertBeforeOverwriting = false;
             excelapp.Visible = true;
+        }
+
+        private void LoadAllHandbooks()
+        {
+            F_DataGrid_Sotrudniki.ItemsSource = Table.Sotrudniki.DVTable;
+            F_DataGrid_Neispravnosti.ItemsSource = Table.Neispravnosti.DVTable;
+            F_DataGrid_Izgotovitel.ItemsSource = Table.Izgotovitel.DVTable;
+            F_DataGrid_Services.ItemsSource = Table.Services.DVTable;
+            F_DataGrid_Statys.ItemsSource = Table.Statys.DVTable;
+            F_DataGrid_TypeTehniki.ItemsSource = Table.TypeTehniki.DVTable;
+            F_DataGrid_Oborudovanie.ItemsSource = Table.Oborudovanie.DVTable;
+            F_DataGrid_Doljnosti.ItemsSource = Table.Doljnosti.DVTable;
+            F_DataGrid_DogovorOPostavke.ItemsSource = Table.DogovorOPostavke.DVTable;
+
+            if (UserRole == "1")
+            {
+                F_DataGrid_Doljnosti.IsEnabled = true;
+            }
+            else if (UserRole == "2")
+            {
+                F_DataGrid_Doljnosti.IsEnabled = false;
+            }
         }
     }
 }

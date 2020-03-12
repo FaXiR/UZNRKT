@@ -32,6 +32,28 @@ namespace CourseProject.Modules
                 , "Users Users RIGHT JOIN Log_avtorizatcii ON Users.ID_User = Log_avtorizatcii.ID_User"
                 , null
                 , "Log_avtorizatcii.Time_in DESC");
+
+            Sotrudniki = new UsingDataView(
+                UsAc
+                , "Sotrudniki.FIO_Master AS [ФИО Мастера], Doljnosti.Nazvanie_Doljnost AS Должность, Sotrudniki.DateOfBirth_Master AS [Дата рождения], Sotrudniki.Phone_Master AS Телефон, Sotrudniki.Adress_Master AS Адрес, Sotrudniki.Email_Master AS Emali"
+                , "Doljnosti RIGHT JOIN Sotrudniki ON Doljnosti.ID_Doljnost = Sotrudniki.Doljnost_Master"
+                , null
+                , null);
+
+            Neispravnosti = new UsingDataView(UsAc, "Neispravnosti.Naimenovanie AS Неисправность", "Neispravnosti", null, null);
+            Izgotovitel = new UsingDataView(UsAc, "Izgotovitel.Nazvanie_Izgotovitel AS Название", "Izgotovitel", null, null);
+            Services = new UsingDataView(UsAc, "Services.Nazvanie_Services AS Название, Services.Stoimost_Services AS Стоимость", "Services", null, null);
+            Statys = new UsingDataView(UsAc, "Statys.Statys_Statys AS Статус", "Statys", null, null);
+            TypeTehniki = new UsingDataView(UsAc, " TypeTehniki.Type_TypeTehniki AS Тип", "TypeTehniki", null, null);
+            Oborudovanie = new UsingDataView(UsAc, " Oborudovanie.Model AS Модель, Oborudovanie.SerNomer AS[Серийный номер], Oborudovanie.Komplektaciya AS Комплектация, Oborudovanie.Primechaniya AS Примечания", "Oborudovanie", null, null);
+            Doljnosti = new UsingDataView(UsAc, " Doljnosti.Nazvanie_Doljnost AS Должность", "Doljnosti", null, null);
+
+            DogovorOPostavke = new UsingDataView(
+                UsAc
+                , "Postavchiki.Nazvanie_Postavchik AS Поставщик, DogovorOPostavke.DateZakaza AS [Дата заказа], DogovorOPostavke.NazvanieMateriala AS Материал, DogovorOPostavke.CenaZaEd AS [Цена заказа], DogovorOPostavke.Kolichestvo AS Количество, DogovorOPostavke.DatePostavki AS [Дата поставки], DogovorOPostavke.SummaZakaza AS [Сумма заказа]"
+                , "Postavchiki RIGHT JOIN DogovorOPostavke ON Postavchiki.ID_Postavchik = DogovorOPostavke.Postavchik"
+                , null
+                , null);
         }
 
         /// <summary>
@@ -43,5 +65,16 @@ namespace CourseProject.Modules
         /// Список времени авторизации
         /// </summary>
         public UsingDataView AutorizationTime;
+
+
+        public UsingDataView Sotrudniki;
+        public UsingDataView Neispravnosti;
+        public UsingDataView Izgotovitel;
+        public UsingDataView Services;
+        public UsingDataView Statys;
+        public UsingDataView TypeTehniki;
+        public UsingDataView Oborudovanie;
+        public UsingDataView Doljnosti;
+        public UsingDataView DogovorOPostavke;
     }
 }
