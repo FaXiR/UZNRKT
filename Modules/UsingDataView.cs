@@ -1,7 +1,6 @@
-﻿using KursProject.Modules;
-using System.Data;
+﻿using System.Data;
 
-namespace CourseProject.Modules
+namespace UZNRKT.Modules
 {
     /// <summary>
     /// Упрощенное взаимодейстеие с таблицой

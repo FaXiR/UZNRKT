@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Data.OleDb;
 
-namespace KursProject.Modules
+namespace UZNRKT.Modules
 {
     /// <summary>
     /// Упрощенное взаимодействие с БД Access

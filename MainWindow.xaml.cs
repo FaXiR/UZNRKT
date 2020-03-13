@@ -2,23 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using CourseProject.Modules;
-using KursProject.Modules;
-using Microsoft.Win32;
 using UZNRKT.Modules;
 
 namespace UZNRKT
@@ -340,6 +327,9 @@ namespace UZNRKT
             F_Grid_Handbooks_SelectHandbooks.Text = Handbooks;
             DataGrid_Handbooks_SelectItem = null;
 
+            F_Grid_Handbooks_AddButton.IsEnabled = true;
+            F_Grid_Handbooks_DeleteButton.IsEnabled = true;
+
             switch (Handbooks)
             {
                 case "Сотрудники/Мастера":
@@ -526,7 +516,60 @@ namespace UZNRKT
             //Получение результата
             if (AddApp.ShowDialog() == true)
             {
+                //Обновление справочников
+                F_Grid_Handbooks_AddButton.IsEnabled = true;
+                F_Grid_Handbooks_DeleteButton.IsEnabled = true;
 
+                switch (F_ListBox_Handbooks.SelectedItem.ToString())
+                {
+                    case "Сотрудники/Мастера":
+                        Table.Sotrudniki.UpdateTable();
+                        F_DataGrid_Handbook.ItemsSource = Table.Sotrudniki.DVTable;
+                        break;
+                    case "Тип неисправности":
+                        Table.Neispravnosti.UpdateTable();
+                        F_DataGrid_Handbook.ItemsSource = Table.Neispravnosti.DVTable;
+                        break;
+                    case "Изготовители":
+                        Table.Izgotovitel.UpdateTable();
+                        F_DataGrid_Handbook.ItemsSource = Table.Izgotovitel.DVTable;
+                        break;
+                    case "Услуги":
+                        Table.Services.UpdateTable();
+                        F_DataGrid_Handbook.ItemsSource = Table.Services.DVTable;
+                        break;
+                    case "Стутс заявки":
+                        Table.Statys.UpdateTable();
+                        F_DataGrid_Handbook.ItemsSource = Table.Statys.DVTable;
+                        break;
+                    case "Тип техники":
+                        Table.TypeTehniki.UpdateTable();
+                        F_DataGrid_Handbook.ItemsSource = Table.TypeTehniki.DVTable;
+                        break;
+                    case "Оборудование":
+                        Table.Oborudovanie.UpdateTable();
+                        F_DataGrid_Handbook.ItemsSource = Table.Oborudovanie.DVTable;
+                        break;
+                    case "Договора о поставке":
+                        Table.DogovorOPostavke.UpdateTable();
+                        F_DataGrid_Handbook.ItemsSource = Table.DogovorOPostavke.DVTable;
+                        break;
+                    case "Должности":
+                        Table.Doljnosti.UpdateTable();
+                        F_DataGrid_Handbook.ItemsSource = Table.Doljnosti.DVTable;
+
+                        if (UserRole == "1")
+                        {
+                            F_Grid_Handbooks_AddButton.IsEnabled = true;
+                            F_Grid_Handbooks_DeleteButton.IsEnabled = true;
+                        }
+                        else if (UserRole == "2")
+                        {
+                            F_Grid_Handbooks_AddButton.IsEnabled = false;
+                            F_Grid_Handbooks_DeleteButton.IsEnabled = false;
+                        }
+                        break;
+                }
             }
             else
             {
@@ -823,10 +866,65 @@ namespace UZNRKT
             string IDColumnName = table.Table.Columns[0].ToString();
             string selectID = table.Table.Rows[Convert.ToInt32(DataGrid_Handbooks_SelectItem)][IDColumnName].ToString();
 
-            //Удаление записи
+            
             UsAc.ExecuteNonQuery($@"DELETE FROM {selectTable} WHERE {IDColumnName} = {selectID}");
 
             MessageBox.Show("Запись была удалена");
+
+            //Обновление справочников
+            F_Grid_Handbooks_AddButton.IsEnabled = true;
+            F_Grid_Handbooks_DeleteButton.IsEnabled = true;
+
+            switch (selectTable)
+            {
+                case "Сотрудники/Мастера":
+                    Table.Sotrudniki.UpdateTable();
+                    F_DataGrid_Handbook.ItemsSource = Table.Sotrudniki.DVTable;
+                    break;
+                case "Тип неисправности":
+                    Table.Neispravnosti.UpdateTable();
+                    F_DataGrid_Handbook.ItemsSource = Table.Neispravnosti.DVTable;
+                    break;
+                case "Изготовители":
+                    Table.Izgotovitel.UpdateTable();
+                    F_DataGrid_Handbook.ItemsSource = Table.Izgotovitel.DVTable;
+                    break;
+                case "Услуги":
+                    Table.Services.UpdateTable();
+                    F_DataGrid_Handbook.ItemsSource = Table.Services.DVTable;
+                    break;
+                case "Стутс заявки":
+                    Table.Statys.UpdateTable();
+                    F_DataGrid_Handbook.ItemsSource = Table.Statys.DVTable;
+                    break;
+                case "Тип техники":
+                    Table.TypeTehniki.UpdateTable();
+                    F_DataGrid_Handbook.ItemsSource = Table.TypeTehniki.DVTable;
+                    break;
+                case "Оборудование":
+                    Table.Oborudovanie.UpdateTable();
+                    F_DataGrid_Handbook.ItemsSource = Table.Oborudovanie.DVTable;
+                    break;
+                case "Договора о поставке":
+                    Table.DogovorOPostavke.UpdateTable();
+                    F_DataGrid_Handbook.ItemsSource = Table.DogovorOPostavke.DVTable;
+                    break;
+                case "Должности":
+                    Table.Doljnosti.UpdateTable();
+                    F_DataGrid_Handbook.ItemsSource = Table.Doljnosti.DVTable;
+
+                    if (UserRole == "1")
+                    {
+                        F_Grid_Handbooks_AddButton.IsEnabled = true;
+                        F_Grid_Handbooks_DeleteButton.IsEnabled = true;
+                    }
+                    else if (UserRole == "2")
+                    {
+                        F_Grid_Handbooks_AddButton.IsEnabled = false;
+                        F_Grid_Handbooks_DeleteButton.IsEnabled = false;
+                    }
+                    break;
+            }
         }
     }
 }

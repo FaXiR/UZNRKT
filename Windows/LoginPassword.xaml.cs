@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using KursProject.Modules;
+using UZNRKT.Modules;
 
 namespace UZNRKT.Windows
 {

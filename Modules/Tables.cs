@@ -1,6 +1,4 @@
-﻿using KursProject.Modules;
-
-namespace CourseProject.Modules
+﻿namespace UZNRKT.Modules
 {
     /// <summary>
     /// Хранит все таблицы для проекта UZNRKT

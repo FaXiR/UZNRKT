@@ -1,19 +1,9 @@
-﻿using CourseProject.Modules;
-using KursProject.Modules;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using UZNRKT.Modules;
 
 namespace UZNRKT.Windows
 {
@@ -24,8 +14,9 @@ namespace UZNRKT.Windows
     {
         private UsingAccess UsAc;
         private string from;
-        private string TableName;
         DataView table;
+
+        bool Error = false;
 
         List<string> TypeOfColumnt = new List<string>();
         List<string> NameOfColumn = new List<string>();
@@ -53,9 +44,20 @@ namespace UZNRKT.Windows
             }
             NameOfColumn = ColumnName;
 
+            //Получение типа колонок
             for (int x = 0; x < ColumnName.Count; x++)
             {
-                TypeOfColumnt.Add(table.Table.Rows[0][ColumnName[x]].GetType().ToString());
+                try
+                {
+                    TypeOfColumnt.Add(table.Table.Rows[0][ColumnName[x]].GetType().ToString());
+                }
+                catch
+                {
+                    MessageBox.Show($"Ошибка добавления записи т.к. таблица {from} пустая, обратитесь к администратору для добавления записи напрямую из бд");
+                    Error = true;
+                    return;
+                }
+                
             }
 
             //Получение максимального ID
@@ -111,6 +113,12 @@ namespace UZNRKT.Windows
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            if (Error)
+            {
+                this.DialogResult = false;
+                return;
+            }
+
             CreateRecord();
             this.DialogResult = true;
         }
