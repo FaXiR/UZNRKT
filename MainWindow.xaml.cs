@@ -52,16 +52,22 @@ namespace UZNRKT
             var loadingStatus = new Windows.LoadingApp();
             loadingStatus.Show();
 
-            CreateConnection();
+            if (CreateConnection() == true)
+            {
+                //Объявление таблиц
+                Table = new Tables(UsAc);
 
-            //Закрытия окна загрузки
-            loadingStatus.Close();
+                //Закрытия окна загрузки
+                loadingStatus.Close();
 
-            //Объявление таблиц
-            Table = new Tables(UsAc);
-
-            //Авторизация
-            AutorizationUser();
+                //Авторизация
+                AutorizationUser();
+            }
+            else
+            {
+                //Закрытия окна загрузки
+                loadingStatus.Close();
+            }
         }
 
         /// <summary>
@@ -95,7 +101,7 @@ namespace UZNRKT
         /// Создание подключения
         /// </summary>
         /// <returns>Успех подключения</returns>
-        private void CreateConnection()
+        private bool CreateConnection()
         {
             //Определение пути до БД
             try
@@ -116,6 +122,7 @@ namespace UZNRKT
                 {
                     AutoOpen = true
                 };
+                return true;
             }
             catch
             {
@@ -125,12 +132,13 @@ namespace UZNRKT
                     {
                         AutoOpen = true
                     };
+                    return true;
                 }
                 catch
                 {
                     MessageBox.Show("Не удалось подключится к базе данных, пожалуйста, обратитесь к администратору");
                     this.Close();
-                    return;
+                    return false;
                 }
             }
         }
@@ -866,7 +874,7 @@ namespace UZNRKT
             string IDColumnName = table.Table.Columns[0].ToString();
             string selectID = table.Table.Rows[Convert.ToInt32(DataGrid_Handbooks_SelectItem)][IDColumnName].ToString();
 
-            
+
             UsAc.ExecuteNonQuery($@"DELETE FROM {selectTable} WHERE {IDColumnName} = {selectID}");
 
             MessageBox.Show("Запись была удалена");
