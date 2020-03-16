@@ -97,6 +97,34 @@ namespace UZNRKT
         }
         private string _dataGrid_Handbooks_SelectItem = null;
 
+
+        /// <summary>
+        /// Задает выбранный номер строки в списке пользователей
+        /// </summary>
+        private string DataGrid_Users_SelectItem
+        {
+            get
+            {
+                return _dataGrid_Users_SelectItem;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _dataGrid_Users_SelectItem = null;
+                    F_Grid_User_SelectedUser.Text = null;
+                    F_Grid_User_SelectedUser_StackPanel.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    _dataGrid_Users_SelectItem = value;
+                    F_Grid_User_SelectedUser.Text = value;
+                    F_Grid_User_SelectedUser_StackPanel.Visibility = Visibility.Visible;
+                }
+            }
+        }
+        private string _dataGrid_Users_SelectItem = null;
+
         /// <summary>
         /// Создание подключения
         /// </summary>
@@ -265,9 +293,14 @@ namespace UZNRKT
                     }
                     break;
                 case "Пользователи":
-                    //Обновление данных в таблице
+                    //Обновление данных в таблицах
                     Table.AutorizationTime.UpdateTable();
+
+                    Table.Users.Where = null;
+                    Table.Users.UpdateTable();
+
                     F_TimeAutorization.ItemsSource = Table.AutorizationTime.DVTable;
+                    F_Grid_User_Users.ItemsSource = Table.Users.DVTable;
 
                     F_Grid_Applications.Visibility = Visibility.Hidden;
                     F_Grid_Storage.Visibility = Visibility.Hidden;
@@ -311,6 +344,7 @@ namespace UZNRKT
             }
         }
 
+
         /// <summary>
         /// Событие клика по записи в справочниках. Задает index выбранной записи
         /// </summary>
@@ -323,6 +357,21 @@ namespace UZNRKT
                 DataGrid_Handbooks_SelectItem = null;
             else
                 DataGrid_Handbooks_SelectItem = index.ToString();
+            return;
+        }
+
+        /// <summary>
+        /// Событие клика по записи в справочниках. Задает index выбранной записи
+        /// </summary>
+        private void DataGrid_SelectedCellsChangedInUserList(object sender, SelectedCellsChangedEventArgs e)
+        {
+            DataGrid DG = (DataGrid)sender;
+            int index = DG.SelectedIndex;
+
+            if (index == -1)
+                DataGrid_Users_SelectItem = null;
+            else
+                DataGrid_Users_SelectItem = ((DataView)DG.ItemsSource).Table.Rows[index]["# ID"].ToString();
             return;
         }
 
@@ -616,6 +665,33 @@ namespace UZNRKT
         private void F_Grid_Applications_ResetClick(object sender, RoutedEventArgs e)
         {
             FoundApplicationInList(null, null, null, null);
+        }
+
+        /// <summary>
+        /// Событие нажатия кнопки сброса времени авторизаций
+        /// </summary>
+        private void F_Grid_Users_ResetClick(object sender, RoutedEventArgs e)
+        {
+            Table.AutorizationTime.Where = null;
+            Table.AutorizationTime.UpdateTable();
+            F_TimeAutorization.ItemsSource = Table.AutorizationTime.DVTable;
+
+            DataGrid_Users_SelectItem = null;
+        }
+
+        private void F_Grid_Users_SelectUserAutorization(object sender, RoutedEventArgs e)
+        {
+            if (DataGrid_Users_SelectItem == null)
+            {
+                Table.AutorizationTime.Where = null;
+            }
+            else
+            {
+                Table.AutorizationTime.Where = $@"Users.ID_User = {DataGrid_Users_SelectItem}";
+            }
+            
+            Table.AutorizationTime.UpdateTable();
+            F_TimeAutorization.ItemsSource = Table.AutorizationTime.DVTable;
         }
 
         /// <summary>
