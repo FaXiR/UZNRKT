@@ -134,10 +134,10 @@
                     <Button Width="168" Height="24" Margin="0,6,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Content="Вывести время авторизаций" Click="F_Grid_Users_SelectUserAutorization"/>
                     <DataGrid SelectedCellsChanged="DataGrid_SelectedCellsChangedInUserList" x:Name="F_Grid_User_Users" Margin="10,34,10,44" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGenerating" CanUserSortColumns="False"/>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,10">
-                        <Button Width="96" Height="24" Margin="0,0,4,0" Content="Добавить"/>
-                        <Button Width="120" Height="24" Margin="0,0,4,0" Content="Обнулить пароль"/>
+                        <Button Width="96" Height="24" Margin="0,0,4,0" Content="Добавить" Click="F_Grid_Users_AddClick"/>
+                        <Button Width="120" Height="24" Margin="0,0,4,0" Content="Обнулить пароль" Click="F_Grid_Users_PasswordResetClick"/>
                     </StackPanel>
-                    <Button Width="96" Height="24" Margin="0,0,10,10" Content="Удалить" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                    <Button Width="96" Height="24" Margin="0,0,10,10" Content="Удалить" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="F_Grid_Users_DeleteClick"/>
                 </Grid>
 
                 <!-- Время авторизаций -->

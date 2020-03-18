@@ -58,8 +58,8 @@
 
             Users = new UsingDataView(
                 UsAc
-                , "Users.ID_User AS[# ID], Users.Login_User AS Логин, Sotrudniki.FIO_Master AS ФИО, Sotrudniki.Doljnost_Master AS Должность, Roles.Role_Role AS Роль"
-                , "(Roles RIGHT JOIN Users ON Roles.ID_Role = Users.Role) RIGHT JOIN Sotrudniki ON Users.ID_User = Sotrudniki.IDUsera"
+                , "Users.ID_User AS [# ID], Users.Login_User AS Логин, Sotrudniki.FIO_Master AS ФИО, Doljnosti.Nazvanie_Doljnost AS Должность, Roles.Role_Role AS Роль"
+                , "Doljnosti RIGHT JOIN ((Roles RIGHT JOIN Users ON Roles.ID_Role = Users.Role) RIGHT JOIN Sotrudniki ON Users.ID_User = Sotrudniki.IDUsera) ON Doljnosti.ID_Doljnost = Sotrudniki.Doljnost_Master;"
                 , null
                 , null);
         }

@@ -689,7 +689,7 @@ namespace UZNRKT
             {
                 Table.AutorizationTime.Where = $@"Users.ID_User = {DataGrid_Users_SelectItem}";
             }
-            
+
             Table.AutorizationTime.UpdateTable();
             F_TimeAutorization.ItemsSource = Table.AutorizationTime.DVTable;
         }
@@ -1009,6 +1009,45 @@ namespace UZNRKT
                     }
                     break;
             }
+        }
+
+        private void F_Grid_Users_AddClick(object sender, RoutedEventArgs e)
+        {
+            var AddUser = new Windows.UserControl(UsAc, null);
+            if (AddUser.ShowDialog() == true)
+            {
+                Table.Users.Where = null;
+                Table.Users.UpdateTable();
+
+                F_Grid_User_Users.ItemsSource = Table.Users.DVTable;
+            }
+        }
+
+        private void F_Grid_Users_PasswordResetClick(object sender, RoutedEventArgs e)
+        {
+            if (DataGrid_Users_SelectItem == null)
+            {
+                return;
+            }
+
+            UsAc.ExecuteNonQuery($@"UPDATE Users SET Password_User = """" WHERE ID_User = ""{DataGrid_Users_SelectItem}""");
+
+            MessageBox.Show("Пароль был сброшен");
+        }
+
+        private void F_Grid_Users_DeleteClick(object sender, RoutedEventArgs e)
+        {
+            if (DataGrid_Users_SelectItem == null)
+            {
+                return;
+            }
+
+            UsAc.ExecuteNonQuery($@"DELETE FROM Users Where ID_User = ""{DataGrid_Users_SelectItem}""");
+
+            Table.Users.Where = null;
+            Table.Users.UpdateTable();
+
+            F_Grid_User_Users.ItemsSource = Table.Users.DVTable;
         }
     }
 }
