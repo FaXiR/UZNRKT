@@ -62,6 +62,13 @@
                 , "(Roles RIGHT JOIN Users ON Roles.ID_Role = Users.Role) LEFT JOIN (Doljnosti RIGHT JOIN Sotrudniki ON Doljnosti.ID_Doljnost = Sotrudniki.Doljnost_Master) ON Users.ID_User = Sotrudniki.IDUsera"
                 , null
                 , null);
+
+            TMC = new UsingDataView(
+                UsAc
+                , "TMC.Nazvanie_TMC AS Название, TMC.Kolichestvo_TMC AS Количество, TMC.Postavchik_TMC AS Поставщик"
+                , "Postavchiki RIGHT JOIN TMC ON Postavchiki.ID_Postavchik = TMC.Postavchik_TMC"
+                , null
+                , null);
         }
 
         public UsingDataView Zayavki;
@@ -76,5 +83,6 @@
         public UsingDataView Doljnosti;
         public UsingDataView DogovorOPostavke;
         public UsingDataView Users;
+        public UsingDataView TMC;
     }
 }

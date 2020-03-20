@@ -219,14 +219,16 @@ namespace UZNRKT
                 //Обновляет таблицу заявок
                 FoundApplicationInList(null, null, null, null);
 
-                //Определяет доступных клиентов и статусы 
-                LoadClientAndStatus();
+                //Обновляет таблицу склада
+                FoundStorageInList(null);
+
+                //Определяет доступных клиентов, статусы и поставщиков
+                LoadClientStatusPostavshik();
 
                 //Сброс выбранной справки
                 F_DataGrid_Handbook.ItemsSource = null;
                 F_Grid_Handbooks_SelectHandbooks.Text = null;
                 DataGrid_Handbooks_SelectItem = null;
-
 
                 //Выставление главной страницы
                 F_Grid_Applications.Visibility = Visibility.Visible;
@@ -254,8 +256,8 @@ namespace UZNRKT
             switch (menuItem.Header.ToString())
             {
                 case "Заявки":
-                    //Обновление списка юзеров и мастеров
-                    LoadClientAndStatus();
+                    //Обновление списка юзеров, мастеров и поставщиков
+                    LoadClientStatusPostavshik();
 
                     F_Grid_Applications.Visibility = Visibility.Visible;
                     F_Grid_Storage.Visibility = Visibility.Hidden;
@@ -443,7 +445,7 @@ namespace UZNRKT
         /// <summary>
         /// Подргужает известных клиентов и статусы в F_Grid_Applications_Client и F_Grid_Applications_Status
         /// </summary>
-        private void LoadClientAndStatus()
+        private void LoadClientStatusPostavshik()
         {
             ObservableCollection<string> ClientList = new ObservableCollection<string>();
             ClientList.Add("---");
@@ -466,8 +468,20 @@ namespace UZNRKT
             }
             F_Grid_Applications_Status.ItemsSource = StatusList;
 
+
+            ObservableCollection<string> PostavshikList = new ObservableCollection<string>();
+            PostavshikList.Add("---");
+
+            tab = UsAc.Execute("SELECT Nazvanie_Postavchik FROM Postavchiki");
+            for (int i = 0; i < tab.Count; i++)
+            {
+                PostavshikList.Add(tab.Table.Rows[i]["Nazvanie_Postavchik"].ToString());
+            }
+            F_Grid_Storage_Postavshik.ItemsSource = PostavshikList;
+
             F_Grid_Applications_Client.SelectedIndex = 0;
             F_Grid_Applications_Status.SelectedIndex = 0;
+            F_Grid_Storage_Postavshik.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -665,6 +679,14 @@ namespace UZNRKT
         private void F_Grid_Applications_ResetClick(object sender, RoutedEventArgs e)
         {
             FoundApplicationInList(null, null, null, null);
+        }
+
+        /// <summary>
+        /// Событие нажатия кнопки сброса списка компонентов
+        /// </summary>
+        private void F_Grid_Storage_ResetClick(object sender, RoutedEventArgs e)
+        {
+            FoundStorageInList(null);
         }
 
         /// <summary>
@@ -1048,6 +1070,34 @@ namespace UZNRKT
             Table.Users.UpdateTable();
 
             F_Grid_User_Users.ItemsSource = Table.Users.DVTable;
+        }
+
+        private void F_Grid_Storage_Postavshik_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            FoundStorageInList(F_Grid_Storage_Postavshik.SelectedItem.ToString());
+        }
+
+        /// <summary>
+        /// Поиск записей в таблице Postavchiki.
+        /// </summary>
+        private void FoundStorageInList(string Postavshik)
+        {
+            string request = null;
+
+            if (!(Postavshik == null && Postavshik != ""))
+            {
+                request += "1=1";
+
+                if (Postavshik != null && Postavshik != "" && Postavshik != "---")
+                {
+                    request += $@" and Postavchiki.Nazvanie_Postavchik = ""{Postavshik}""";
+                }
+            }
+
+            Table.TMC.Where = request;
+            Table.TMC.UpdateTable();
+
+            F_ListOfStorage.ItemsSource = Table.TMC.DVTable;
         }
     }
 }
