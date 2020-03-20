@@ -51,18 +51,24 @@ namespace UZNRKT.Windows
         /// Проверка полей на пустоту и попытка авторизации
         /// </summary>
         private void AttemptEnter()
-        {            
-            if (F_Login.Text == "" && F_Password.Password == "")
+        {
+            if (F_Login.Text.Length > 4)
+            {
+                CheckNewUser(F_Login.Text);
+            }
+            
+
+            if (F_Login.Text.Length < 4 && F_Password.Password.Length < 4)
             {
                 MessageBox.Show("Введите пользователя и пароль");
                 return;
             }
-            else if (F_Login.Text == "")
+            else if (F_Login.Text.Length < 4)
             {
                 MessageBox.Show("Введите пользователя");
                 return;
             }
-            else if (F_Password.Password == "")
+            else if (F_Password.Password.Length < 4)
             {
                 MessageBox.Show("Введите пароль");
                 return;
@@ -85,7 +91,6 @@ namespace UZNRKT.Windows
         /// <returns>Наличие записи</returns>
         private bool CheckLogPas()
         {
-            System.Console.WriteLine($"Поиск в БД записи {F_Login.Text} и {F_Password.Password}");
             //Проверка записи в БД
             var FoundRole = UsAc.Execute($@"Select Role, ID_User From Users where Login_User = ""{F_Login.Text}"" and Password_User = ""{F_Password.Password}""");
             if (FoundRole.Count == 0)
@@ -98,8 +103,35 @@ namespace UZNRKT.Windows
                 Role = FoundRole.Table.Rows[0]["Role"].ToString();
                 ID = FoundRole.Table.Rows[0]["ID_User"].ToString();
                 return true;
-            }            
+            }
         }
+
+        private bool CheckNewUser(string User)
+        {
+            //Проверка записи в БД
+            var FoundUser = UsAc.Execute($@"Select Password_User From Users where Login_User = ""{F_Login.Text}""");
+
+            //Определение числа записей
+            if (FoundUser.Table.Rows.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                if (FoundUser.Table.Rows[0]["Password_User"].ToString() == "")
+                {
+                    //Окно создания пароля
+                    new Windows.CreatePassword(User, UsAc).ShowDialog();
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
         /// <summary>
         /// Событие нажатии кнопки в TextBox Логина
         /// </summary>

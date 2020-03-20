@@ -1030,7 +1030,7 @@ namespace UZNRKT
                 return;
             }
 
-            UsAc.ExecuteNonQuery($@"UPDATE Users SET Password_User = """" WHERE ID_User = ""{DataGrid_Users_SelectItem}""");
+            UsAc.ExecuteNonQuery($@"UPDATE Users SET Password_User = null WHERE ID_User = {DataGrid_Users_SelectItem}");
 
             MessageBox.Show("Пароль был сброшен");
         }
@@ -1042,7 +1042,7 @@ namespace UZNRKT
                 return;
             }
 
-            UsAc.ExecuteNonQuery($@"DELETE FROM Users Where ID_User = ""{DataGrid_Users_SelectItem}""");
+            UsAc.ExecuteNonQuery($@"DELETE FROM Users Where ID_User = {DataGrid_Users_SelectItem}");
 
             Table.Users.Where = null;
             Table.Users.UpdateTable();

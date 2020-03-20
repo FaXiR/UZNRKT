@@ -74,6 +74,9 @@
     <Compile Include="Windows\AppInfo.xaml.cs">
       <DependentUpon>AppInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\CreatePassword.xaml.cs">
+      <DependentUpon>CreatePassword.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\LoadingApp.xaml.cs">
       <DependentUpon>LoadingApp.xaml</DependentUpon>
     </Compile>
@@ -104,6 +107,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\AppInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CreatePassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

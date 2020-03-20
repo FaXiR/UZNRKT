@@ -82,27 +82,37 @@ namespace UZNRKT.Windows
             UsAc.AutoOpen = false;
             UsAc.ConnectOpen();
 
+            bool SuccessAdd = false;
+
             if (F_Button_AddEdit.Content.ToString() == "Добавить")
             {
-                AddNewUser();
+                SuccessAdd = AddNewUser();
             }
             else
             {
-                //  SaveUser();
+                //SuccessAdd = SaveUser();
             }
 
             UsAc.ConnectClose();
             UsAc.AutoOpen = AutoOpenInUsAc;
 
-            this.DialogResult = true;
+            if (SuccessAdd)
+                this.DialogResult = true;
         }
         private void ButtonClick_cancel(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
         }
 
-        private void AddNewUser()
+        private bool AddNewUser()
         {
+            //Проверка длины логина
+            if (F_Login.Text.Length < 4)
+            {
+                MessageBox.Show("Длина логина не может быть короче 4 символов");
+                return false;
+            }
+
             //Добавление как пользователя
             UsAc.ExecuteNonQuery($@"INSERT INTO Users (Login_User, Password_User, Role) VALUES (""{F_Login.Text}"","""", 2)");
 
@@ -163,6 +173,8 @@ namespace UZNRKT.Windows
             Values += $@",{ID}";
 
             UsAc.ExecuteNonQuery($@"INSERT INTO Sotrudniki ({From}) VALUES ({Values})");
+
+            return true;
         }
     }
 }
