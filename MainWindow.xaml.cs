@@ -220,7 +220,7 @@ namespace UZNRKT
                 FoundApplicationInList(null, null, null, null);
 
                 //Обновляет таблицу склада
-                FoundStorageInList(null);
+                FoundStorageInList(null, null);
 
                 //Определяет доступных клиентов, статусы и поставщиков
                 LoadClientStatusPostavshik();
@@ -686,7 +686,7 @@ namespace UZNRKT
         /// </summary>
         private void F_Grid_Storage_ResetClick(object sender, RoutedEventArgs e)
         {
-            FoundStorageInList(null);
+            FoundStorageInList(null, null);
         }
 
         /// <summary>
@@ -1071,22 +1071,40 @@ namespace UZNRKT
 
             F_Grid_User_Users.ItemsSource = Table.Users.DVTable;
         }
-
-        private void F_Grid_Storage_Postavshik_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        
+        private void F_Grid_Storage_AddClick(object sender, RoutedEventArgs e)
         {
-            FoundStorageInList(F_Grid_Storage_Postavshik.SelectedItem.ToString());
+            var window = new Windows.ComponentControl(UsAc, null);
+            if (window.ShowDialog() == true)
+            {
+                MessageBox.Show("Запись добавлена");
+            }
+            else
+            {
+                MessageBox.Show("Запись была отменена");
+            }
+        }
+
+        private void F_Grid_Storage_FoundClick(object sender, RoutedEventArgs e)
+        {
+            FoundStorageInList(F_Grid_Storage_Component.Text, F_Grid_Storage_Postavshik.SelectedItem.ToString());
         }
 
         /// <summary>
         /// Поиск записей в таблице Postavchiki.
         /// </summary>
-        private void FoundStorageInList(string Postavshik)
+        private void FoundStorageInList(string Component, string Postavshik)
         {
             string request = null;
 
-            if (!(Postavshik == null && Postavshik != ""))
+            if (!(Postavshik == null && Postavshik == "" || Component == null && Component != ""))
             {
                 request += "1=1";
+
+                if (Component != null && Component != "")
+                {
+                    request += $@" and TMC.Nazvanie_TMC Like ""%{Component}%""";
+                }
 
                 if (Postavshik != null && Postavshik != "" && Postavshik != "---")
                 {

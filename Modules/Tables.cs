@@ -25,9 +25,7 @@
             TypeTehniki = new UsingDataView(UsAc, " TypeTehniki.Type_TypeTehniki AS Тип", "TypeTehniki", null, null);
             Oborudovanie = new UsingDataView(UsAc, " Oborudovanie.Model AS Модель, Oborudovanie.SerNomer AS[Серийный номер], Oborudovanie.Komplektaciya AS Комплектация, Oborudovanie.Primechaniya AS Примечания", "Oborudovanie", null, null);
             Doljnosti = new UsingDataView(UsAc, " Doljnosti.Nazvanie_Doljnost AS Должность", "Doljnosti", null, null);
-
-
-
+                       
             Zayavki = new UsingDataView(
                 UsAc
                 , "Zayavki.ID_Zayavki AS [ID заявки], Zayavki.Date_Zayavki AS [Дата заявки], Sotrudniki.FIO_Master AS [ФИО мастера], Clients.FIO_Client AS [ФИО клиента], Neispravnosti.Naimenovanie AS [Тип неисправности], TypeTehniki.Type_TypeTehniki AS [Тип техники], Izgotovitel.Nazvanie_Izgotovitel AS Изготовитель, Oborudovanie.Model AS Модель, Services.Nazvanie_Services AS [Название услуги], Zayavki.KolvoServ AS [Кол-во деталей], TMC.Nazvanie_TMC AS Деталь, Statys.Statys_Statys AS [Статус выполнения], Zayavki.Date_okonchaniya_Zayavki AS [Дата окончания], Zayavki.Summa AS Сумма"
@@ -65,7 +63,7 @@
 
             TMC = new UsingDataView(
                 UsAc
-                , "TMC.Nazvanie_TMC AS Название, TMC.Kolichestvo_TMC AS Количество, TMC.Postavchik_TMC AS Поставщик"
+                , "TMC.Nazvanie_TMC AS Название, TMC.Kolichestvo_TMC AS Количество, Postavchiki.Nazvanie_Postavchik AS Поставщик"
                 , "Postavchiki RIGHT JOIN TMC ON Postavchiki.ID_Postavchik = TMC.Postavchik_TMC"
                 , null
                 , null);
