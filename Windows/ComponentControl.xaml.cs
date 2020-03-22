@@ -85,7 +85,7 @@ namespace UZNRKT.Windows
                 if (value == ComboboxList[i])
                 {
                     F_Postav.SelectedIndex = i;
-                    return;
+                    break;
                 }
             }
             F_Postav.SelectedIndex = 0;
@@ -104,16 +104,21 @@ namespace UZNRKT.Windows
             if (F_Button_AddEdit.Content.ToString() == "Добавить")
             {
                 if (!AddNewApplication())
+                {
+                    UsAc.ConnectClose();
+                    UsAc.AutoOpen = AutoOpenInUsAc;
                     return;
+                }
             }
             else
             {
                 if (!SaveApplication())
+                {
+                    UsAc.ConnectClose();
+                    UsAc.AutoOpen = AutoOpenInUsAc;
                     return;
+                }
             }
-
-            UsAc.ConnectClose();
-            UsAc.AutoOpen = AutoOpenInUsAc;
 
             this.DialogResult = true;
         }
@@ -170,7 +175,9 @@ namespace UZNRKT.Windows
                 return false;
             }
 
-            return false;
+            UsAc.ExecuteNonQuery($@"UPDATE TMC SET Kolichestvo_TMC = {F_Count.Text} WHERE ID_TMC = {ID_TMC}");
+
+            return true;
         }
 
         private void ButtonClick_cancel(object sender, RoutedEventArgs e)

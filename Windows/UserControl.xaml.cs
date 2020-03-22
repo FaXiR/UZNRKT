@@ -39,7 +39,6 @@ namespace UZNRKT.Windows
             }
             else
             {
-
                 F_Button_AddEdit.Content = "Добавить";
                 Title = "Добавление пользователя";
             }

@@ -63,7 +63,7 @@
 
             TMC = new UsingDataView(
                 UsAc
-                , "TMC.Nazvanie_TMC AS Название, TMC.Kolichestvo_TMC AS Количество, Postavchiki.Nazvanie_Postavchik AS Поставщик"
+                , "TMC.ID_TMC AS ID, TMC.Nazvanie_TMC AS Название, TMC.Kolichestvo_TMC AS Количество, Postavchiki.Nazvanie_Postavchik AS Поставщик"
                 , "Postavchiki RIGHT JOIN TMC ON Postavchiki.ID_Postavchik = TMC.Postavchik_TMC"
                 , null
                 , null);

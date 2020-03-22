@@ -362,6 +362,18 @@ namespace UZNRKT
             return;
         }
 
+        private void DataGrid_SelectedCellsChangedInTMC(object sender, SelectedCellsChangedEventArgs e)
+        {
+            DataGrid DG = (DataGrid)sender;
+            int index = DG.SelectedIndex;
+
+            if (index == -1)
+                Title_SelectTMC = null;
+            else
+                Title_SelectTMC = ((DataView)DG.ItemsSource).Table.Rows[index]["ID"].ToString();
+            return;
+        }
+
         /// <summary>
         /// Событие клика по записи в справочниках. Задает index выбранной записи
         /// </summary>
@@ -373,7 +385,7 @@ namespace UZNRKT
             if (index == -1)
                 DataGrid_Users_SelectItem = null;
             else
-                DataGrid_Users_SelectItem = ((DataView)DG.ItemsSource).Table.Rows[index]["# ID"].ToString();
+                DataGrid_Users_SelectItem = ((DataView)DG.ItemsSource).Table.Rows[index]["ID"].ToString();
             return;
         }
 
@@ -575,6 +587,30 @@ namespace UZNRKT
             }
         }
         private string _selectApplicationIndex = null;
+
+
+        private string Title_SelectTMC
+        {
+            get
+            {
+                return _selectTMC;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    F_Grid_Storage_TitleSelectTMC.Text = value;
+                    F_Grid_Storage_TitleSelect.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    F_Grid_Storage_TitleSelectTMC.Text = value;
+                    F_Grid_Storage_TitleSelect.Visibility = Visibility.Visible;
+                }
+                _selectTMC = value;
+            }
+        }
+        string _selectTMC = null;
 
 
         /// <summary>
@@ -1085,6 +1121,43 @@ namespace UZNRKT
             }
         }
 
+        private void F_Grid_Storage_EditClick(object sender, RoutedEventArgs e)
+        {
+            if (Title_SelectTMC == null)
+            {
+                return;
+            }
+
+            var window = new Windows.ComponentControl(UsAc, Title_SelectTMC);
+            if (window.ShowDialog() == true)
+            {
+                MessageBox.Show("Запись обновлена");
+            }
+            else
+            {
+                MessageBox.Show("Запись была отменена");
+            }
+        }
+
+        private void F_Grid_Storage_DeleteClick(object sender, RoutedEventArgs e)
+        {
+            if (Title_SelectTMC == null)
+            {
+                return;
+            }
+
+            try
+            {
+                UsAc.ExecuteNonQuery($@"DELETE FROM TMC Where ID_TMC = {Title_SelectTMC}");
+            }
+            finally
+            {
+                MessageBox.Show("Запись удалена, обновите таблицу");
+                Title_SelectApplication = null;
+            }
+
+
+        }
         private void F_Grid_Storage_FoundClick(object sender, RoutedEventArgs e)
         {
             FoundStorageInList(F_Grid_Storage_Component.Text, F_Grid_Storage_Postavshik.SelectedItem.ToString());
