@@ -22,7 +22,7 @@ namespace UZNRKT.Windows
             this.UsAc = UsAc;
 
             this.table = table;
-            if (table == null)
+            if (table.Count == 0)
             {
                 F_ApplicationCount.Text = "Число записей: 0";
                 F_ButtonApplicationCount.IsEnabled = false;

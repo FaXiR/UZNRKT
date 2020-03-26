@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -308,6 +309,17 @@ namespace UZNRKT
                     F_Grid_Storage.Visibility = Visibility.Hidden;
                     F_Grid_User.Visibility = Visibility.Visible;
                     F_Grid_Handbooks.Visibility = Visibility.Hidden;
+                    break;
+                case "Помощь":
+                    //Проверка наличия файла помощи
+                    if (File.Exists(Environment.CurrentDirectory + "\\Help.chm"))
+                    {
+                        Process.Start(Environment.CurrentDirectory + "\\Help.chm");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Файл помощи не найден!");
+                    }
                     break;
                 default:
                     MessageBox.Show(menuItem.Header.ToString());

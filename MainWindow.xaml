@@ -18,6 +18,7 @@
             <MenuItem Header="Склад" Click="MenuItem_Click"/>
             <MenuItem Header="Справочники" Click="MenuItem_Click"/>
             <MenuItem Header="Печать" Click="MenuItem_Click"/>
+            <MenuItem Header="Помощь" Click="MenuItem_Click"/>
             <MenuItem Header="О программе" Click="MenuItem_Click"/>
             <MenuItem Header="Выход" Click="MenuItem_Click"/>
             <MenuItem Header="Пользователи" Click="MenuItem_Click" x:Name="F_Menu_UserItem"/>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UZNRKT.Windows"
         mc:Ignorable="d"
-        Title="О программе" Height="345.529" Width="651.942" ResizeMode="NoResize">
+        Title="О программе" Height="321" Width="652" ResizeMode="NoResize">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -16,16 +16,15 @@
         <StackPanel>
             <TextBlock Text="Данная программа предназначена для автоматизации сервисного центра по ремонту оборудования, также информационная система содержит сведения о составе оборудования и сотрудниках, отвечающих за сохранность и эффективную работу компьютерной техники." TextWrapping="Wrap" Margin="4,4,4,0"/>
             <TextBlock Text="Учет человеческого фактора подразумевает возможность работы в системе различных категорий пользователей, с разными навыками и «степенью знаний» в области информационных технологий. Для этого все формы приложения построены с использованием одинакового пользовательского интерфейса. Для работы с данной системой пользователь не должен обладать углубленными знаниями баз данных, а должен лишь владеть компьютером на уровне среднего пользователя." TextWrapping="Wrap" Margin="4,8,4,0"/>
-            <TextBlock Text="Программа разработана на базе ГБПОУ НМК, с помощью объктно - оринтированного языка С#" Margin="4,8,4,0" TextWrapping="Wrap"/>
+            <TextBlock Text="Программа разработана на базе ГБПОУ НМК, с помощью объектно - ориентированного языка С#" Margin="4,8,4,0" TextWrapping="Wrap"/>
             <GroupBox Header=" Основные сведенья об организации " Margin="4" FontWeight="Bold" FontSize="14">
                 <StackPanel>
                     <TextBlock Text="Наименование: ГБПОУ Нефтекамскйи машиностроительный колледж" Margin="4,4,4,0" FontWeight="Bold"/>
                     <TextBlock Text="Директор: Ахметшин Радус Ядитович" Margin="4,4,4,0" FontWeight="Bold"/>
-                    <TextBlock Text="Директор: Ахметшин Радус Ядитович" Margin="4,4,4,0" FontWeight="Bold"/>
                     <TextBlock Text="Официальный сайт: nmt.edu.ru" Margin="4,4,4,0" FontWeight="Bold"/>
                     <Grid >
                         <TextBlock Text="Электронная почта: post@nmt.edu.ru" Margin="4,4,4,0" FontWeight="Bold"/>
-                        <TextBlock Text="Разработчик: Анжелика Красноперова" Margin="4,4,4,0" FontWeight="Bold" HorizontalAlignment="Right"/>
+                        <TextBlock Text="Разработчик: Ангелина Красноперова" Margin="4,4,4,0" FontWeight="Bold" HorizontalAlignment="Right"/>
                     </Grid>
                 </StackPanel>
             </GroupBox>
