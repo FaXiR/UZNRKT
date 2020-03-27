@@ -39,7 +39,7 @@ namespace UZNRKT
         /// <summary>
         /// Путь до БД
         /// </summary>
-        private string BDWay = Environment.CurrentDirectory + "\\db.accdb";
+        private string BDWay = Environment.CurrentDirectory + "\\db.mdb";
         /// <summary>
         /// Время авторизации пользователя
         /// </summary>
@@ -419,6 +419,10 @@ namespace UZNRKT
                     Table.Sotrudniki.UpdateTable();
                     F_DataGrid_Handbook.ItemsSource = Table.Sotrudniki.DVTable;
                     break;
+                case "Клиенты":
+                    Table.Clients.UpdateTable();
+                    F_DataGrid_Handbook.ItemsSource = Table.Clients.DVTable;
+                    break;
                 case "Тип неисправности":
                     Table.Neispravnosti.UpdateTable();
                     F_DataGrid_Handbook.ItemsSource = Table.Neispravnosti.DVTable;
@@ -645,6 +649,10 @@ namespace UZNRKT
                         Table.Sotrudniki.UpdateTable();
                         F_DataGrid_Handbook.ItemsSource = Table.Sotrudniki.DVTable;
                         break;
+                    case "Клиенты":
+                        Table.Clients.UpdateTable();
+                        F_DataGrid_Handbook.ItemsSource = Table.Clients.DVTable;
+                        break;
                     case "Тип неисправности":
                         Table.Neispravnosti.UpdateTable();
                         F_DataGrid_Handbook.ItemsSource = Table.Neispravnosti.DVTable;
@@ -856,6 +864,9 @@ namespace UZNRKT
                 case "Сотрудники/Мастера":
                     from = "Sotrudniki";
                     break;
+                case "Клиенты":
+                    from = "Clients";
+                    break;
                 case "Тип неисправности":
                     from = "Neispravnosti";
                     break;
@@ -920,6 +931,9 @@ namespace UZNRKT
                 case "Сотрудники/Мастера":
                     selectTable = "Sotrudniki";
                     break;
+                case "Клиенты":
+                    selectTable = "Clients";
+                    break;
                 case "Тип неисправности":
                     selectTable = "Neispravnosti";
                     break;
@@ -967,6 +981,10 @@ namespace UZNRKT
                 case "Сотрудники/Мастера":
                     Table.Sotrudniki.UpdateTable();
                     F_DataGrid_Handbook.ItemsSource = Table.Sotrudniki.DVTable;
+                    break;
+                case "Клиенты":
+                    Table.Clients.UpdateTable();
+                    F_DataGrid_Handbook.ItemsSource = Table.Clients.DVTable;
                     break;
                 case "Тип неисправности":
                     Table.Neispravnosti.UpdateTable();

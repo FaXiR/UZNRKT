@@ -140,8 +140,9 @@
             <!-- Справочники -->
             <Grid x:Name="F_Grid_Handbooks" Visibility="Hidden">
                 <TextBlock Text="Справочники" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,4,0,0"/>
-                <ListBox x:Name="F_ListBox_Handbooks" SelectionChanged="ListBox_SelectedItemChanged" HorizontalAlignment="Left" Height="148" Margin="6,24,0,0" VerticalAlignment="Top">
+                <ListBox x:Name="F_ListBox_Handbooks" SelectionChanged="ListBox_SelectedItemChanged" HorizontalAlignment="Left" Height="172" Margin="6,24,0,0" VerticalAlignment="Top">
                     <System:String>Сотрудники/Мастера</System:String>
+                    <System:String>Клиенты</System:String>
                     <System:String>Тип неисправности</System:String>
                     <System:String>Изготовители</System:String>
                     <System:String>Услуги</System:String>
@@ -151,9 +152,9 @@
                     <System:String>Договора о поставке</System:String>
                     <System:String>Должности</System:String>
                 </ListBox>
-                <Button x:Name="F_Grid_Handbooks_AddButton" Margin="6,178,0,0" Content="Добавить запись" Width="123" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Click="F_Grid_Handbooks_Add"/>
+                <Button x:Name="F_Grid_Handbooks_AddButton" Margin="6,202,0,0" Content="Добавить запись" Width="123" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Click="F_Grid_Handbooks_Add"/>
                 <!--  <Button x:Name="F_Grid_Handbooks_EditButton" Margin="6,234,0,0" Content="Редактировать" Width="123" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Click="F_Grid_Handbooks_Edit" IsEnabled="False"/> -->
-                <Button x:Name="F_Grid_Handbooks_DeleteButton" Margin="6,206,0,0" Content="Удалить запись" Width="123" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Click="F_Grid_Handbooks_Delete"/>
+                <Button x:Name="F_Grid_Handbooks_DeleteButton" Margin="6,230,0,0" Content="Удалить запись" Width="123" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Click="F_Grid_Handbooks_Delete"/>
                 <StackPanel Margin="146,4,0,0" Orientation="Horizontal">
                     <TextBlock Text="Справочник:" FontWeight="Bold"/>
                     <TextBlock Margin="4,0,4,0" x:Name="F_Grid_Handbooks_SelectHandbooks"/>

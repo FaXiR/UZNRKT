@@ -47,6 +47,13 @@
                 , null
                 , null);
 
+            Clients = new UsingDataView(
+                UsAc
+                , "Clients.ID_Client AS ID, Clients.FIO_Client AS ФИО, Clients.Phone_Client AS Телефон, Clients.Adress_Client AS Адрес, Clients.Email_Client AS Email"
+                , "Clients"
+                , null
+                , null);
+
             DogovorOPostavke = new UsingDataView(
                 UsAc
                 , "Postavchiki.Nazvanie_Postavchik AS Поставщик, DogovorOPostavke.DateZakaza AS [Дата заказа], DogovorOPostavke.NazvanieMateriala AS Материал, DogovorOPostavke.CenaZaEd AS [Цена заказа], DogovorOPostavke.Kolichestvo AS Количество, DogovorOPostavke.DatePostavki AS [Дата поставки], DogovorOPostavke.SummaZakaza AS [Сумма заказа]"
@@ -72,6 +79,7 @@
         public UsingDataView Zayavki;
         public UsingDataView AutorizationTime;
         public UsingDataView Sotrudniki;
+        public UsingDataView Clients;
         public UsingDataView Neispravnosti;
         public UsingDataView Izgotovitel;
         public UsingDataView Services;
