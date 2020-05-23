@@ -103,9 +103,15 @@ namespace UZNRKT.Modules
         /// <param name="Password">Пароль от БД</param>
         public UsingAccess(string DataSource, string Provider, string Login, string Password)
         {
+            if (!System.IO.File.Exists(DataSource))
+            {
+                throw new System.Exception("Файл не найден " + DataSource);
+            }
+
             this.DataSource = DataSource;
             this.Password = Password;
             this.Login = Login;
+            string err = null;
             if (Provider == null)
             {
                 try
@@ -114,11 +120,20 @@ namespace UZNRKT.Modules
                     myConnection = new OleDbConnection(this.ConnectString);
                     ConnectChech();
                 }
-                catch (System.Data.OleDb.OleDbException)
+                catch (System.Data.OleDb.OleDbException ex)
                 {
-                    this.Provider = "Microsoft.ACE.OLEDB.12.0";
-                    myConnection = new OleDbConnection(this.ConnectString);
-                    ConnectChech();
+                    err += ex.ToString() + "\n\n";
+                    try
+                    {
+                        this.Provider = "Microsoft.ACE.OLEDB.12.0";
+                        myConnection = new OleDbConnection(this.ConnectString);
+                        ConnectChech();
+                    }
+                    catch (System.Exception ex2)
+                    {
+                        err += ex2.ToString();
+                        throw new System.Exception(err);
+                    }
                 }
             }
             else
@@ -126,7 +141,7 @@ namespace UZNRKT.Modules
                 this.Provider = Provider;
                 myConnection = new OleDbConnection(this.ConnectString);
                 ConnectChech();
-            }            
+            }
         }
 
         /// <summary>

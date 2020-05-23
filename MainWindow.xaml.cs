@@ -163,9 +163,9 @@ namespace UZNRKT
                     };
                     return true;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Не удалось подключится к базе данных, пожалуйста, обратитесь к администратору");
+                    MessageBox.Show("Не удалось подключится к базе данных, пожалуйста, обратитесь к администратору \n\n" + ex.ToString(), "Ошибка подклчения к БД");
                     this.Close();
                     return false;
                 }
