@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UZNRKT.Windows"
         mc:Ignorable="d"
-        Title="Управление компонентами" Height="171.876" Width="270.73" ResizeMode="NoResize">
+        Title="Управление зап. частями" Height="171.876" Width="270.73" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>

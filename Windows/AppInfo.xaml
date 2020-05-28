@@ -19,12 +19,12 @@
             <TextBlock Text="Программа разработана на базе ГБПОУ НМК, с помощью объектно - ориентированного языка С#" Margin="4,8,4,0" TextWrapping="Wrap"/>
             <GroupBox Header=" Основные сведенья об организации " Margin="4" FontWeight="Bold" FontSize="14">
                 <StackPanel>
-                    <TextBlock Text="Наименование: ГБПОУ Нефтекамскйи машиностроительный колледж" Margin="4,4,4,0" FontWeight="Bold"/>
-                    <TextBlock Text="Директор: Ахметшин Радус Ядитович" Margin="4,4,4,0" FontWeight="Bold"/>
-                    <TextBlock Text="Официальный сайт: nmt.edu.ru" Margin="4,4,4,0" FontWeight="Bold"/>
+                    <TextBlock Text="Наименование: ГБПОУ Нефтекамскйи машиностроительный колледж" Margin="4,4,4,0"/>
+                    <TextBlock Text="Директор: Ахметшин Радус Ядитович" Margin="4,4,4,0"/>
+                    <TextBlock Text="Официальный сайт: nmt.edu.ru" Margin="4,4,4,0"/>
                     <Grid >
-                        <TextBlock Text="Электронная почта: post@nmt.edu.ru" Margin="4,4,4,0" FontWeight="Bold"/>
-                        <TextBlock Text="Разработчик: Ангелина Красноперова" Margin="4,4,4,0" FontWeight="Bold" HorizontalAlignment="Right"/>
+                        <TextBlock Text="Электронная почта: post@nmt.edu.ru" Margin="4,4,4,0"/>
+                        <TextBlock Text="Разработчик: Ангелина Красноперова" Margin="4,4,4,0" HorizontalAlignment="Right"/>
                     </Grid>
                 </StackPanel>
             </GroupBox>
