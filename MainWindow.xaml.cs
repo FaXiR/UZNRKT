@@ -424,6 +424,17 @@ namespace UZNRKT
                 case "Сотрудники/Мастера":
                     Table.Sotrudniki.UpdateTable();
                     F_DataGrid_Handbook.ItemsSource = Table.Sotrudniki.DVTable;
+
+                    if (UserRole == "1")
+                    {
+                        F_Grid_Handbooks_AddButton.IsEnabled = true;
+                        F_Grid_Handbooks_DeleteButton.IsEnabled = true;
+                    }
+                    else if (UserRole == "2")
+                    {
+                        F_Grid_Handbooks_AddButton.IsEnabled = false;
+                        F_Grid_Handbooks_DeleteButton.IsEnabled = false;
+                    }
                     break;
                 case "Клиенты":
                     Table.Clients.UpdateTable();
