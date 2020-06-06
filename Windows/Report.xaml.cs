@@ -126,7 +126,7 @@ namespace UZNRKT.Windows
         public void OutToWord(string ID)
         {
             //Получение записи из таблицы
-            var table = new UsingDataView(UsAc, "Zayavki.ID_Zayavki, Clients.FIO_Client, Clients.Phone_Client, Neispravnosti.Naimenovanie, TypeTehniki.Type_TypeTehniki, Oborudovanie.Model, Services.Nazvanie_Services, Services.Stoimost_Services, TMC.Nazvanie_TMC, TMC.Kolichestvo_TMC", "TMC RIGHT JOIN (Services RIGHT JOIN (Oborudovanie RIGHT JOIN (TypeTehniki RIGHT JOIN (Neispravnosti RIGHT JOIN (Clients RIGHT JOIN Zayavki ON Clients.ID_Client = Zayavki.Client) ON Neispravnosti.ID_Neispravnosti = Zayavki.Neispravnost_Zayavki) ON TypeTehniki.ID_TypeTehniki = Zayavki.Type_Tehniki_Zayavki) ON Oborudovanie.ID_Oborudovaniya = Zayavki.ID_Oborudovaniya) ON Services.ID_Services = Zayavki.Services) ON TMC.ID_TMC = Zayavki.Materiali", $"Zayavki.ID_Zayavki = {ID}", null).DVTable.Table;
+            var table = new UsingDataView(UsAc, "Zayavki.ID_Zayavki, Clients.FIO_Client, Sotrudniki.FIO_Master, Clients.Phone_Client, Neispravnosti.Naimenovanie, TypeTehniki.Type_TypeTehniki, Oborudovanie.Model, Services.Nazvanie_Services, Services.Stoimost_Services, TMC.Nazvanie_TMC, TMC.Kolichestvo_TMC", "Sotrudniki RIGHT JOIN (TypeTehniki RIGHT JOIN (TMC RIGHT JOIN (Services RIGHT JOIN (Oborudovanie RIGHT JOIN (Neispravnosti RIGHT JOIN (Clients RIGHT JOIN Zayavki ON Clients.ID_Client = Zayavki.Client) ON Neispravnosti.ID_Neispravnosti = Zayavki.Neispravnost_Zayavki) ON Oborudovanie.ID_Oborudovaniya = Zayavki.ID_Oborudovaniya) ON Services.ID_Services = Zayavki.Services) ON TMC.ID_TMC = Zayavki.Materiali) ON TypeTehniki.ID_TypeTehniki = Zayavki.Type_Tehniki_Zayavki) ON Sotrudniki.ID_Master = Zayavki.Master", $"Zayavki.ID_Zayavki = {ID}", null).DVTable.Table;
 
             var wordApp = new Microsoft.Office.Interop.Word.Application();
             wordApp.Visible = false;
@@ -137,6 +137,7 @@ namespace UZNRKT.Windows
                 ReplaceWordStub("{Today}", DateTime.Now.ToShortDateString(), wordDocument);
                 ReplaceWordStub("{Num}", ID, wordDocument);
                 ReplaceWordStub("{Client}", table.Rows[0]["FIO_Client"].ToString(), wordDocument);
+                ReplaceWordStub("{Master}", table.Rows[0]["FIO_Master"].ToString(), wordDocument);
                 ReplaceWordStub("{Neispravnost}", table.Rows[0]["Naimenovanie"].ToString(), wordDocument);
                 ReplaceWordStub("{Model}", table.Rows[0]["Model"].ToString(), wordDocument);
                 ReplaceWordStub("{Phone}", table.Rows[0]["Phone_Client"].ToString(), wordDocument);
