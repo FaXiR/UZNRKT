@@ -67,6 +67,14 @@ namespace UZNRKT
 
                 //Авторизация
                 AutorizationUser();
+
+                //Запуск таймера, для отображения текущнго времени
+                var timer = new System.Windows.Threading.DispatcherTimer();
+                timer.Interval = new TimeSpan(0, 0, 1);
+                timer.IsEnabled = true;
+                timer.Tick += (o, e) => { DisplayingTime.Text = DateTime.Now.ToString(); };
+                timer.Start();
+
             }
             else
             {

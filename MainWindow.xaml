@@ -23,6 +23,10 @@
             <MenuItem Header="Выход" Click="MenuItem_Click"/>
             <MenuItem Header="Пользователи" Click="MenuItem_Click" x:Name="F_Menu_UserItem"/>
         </Menu>
+        
+        <!-- Время в меню -->
+        <TextBlock Grid.Row="0" x:Name="DisplayingTime" FontSize="17" Margin="0,-1,4,0" VerticalAlignment="Top" FontWeight="DemiBold"  HorizontalAlignment="Right"/>
+
         <!-- Грид содержания других гридов -->
         <Grid Grid.Row="1">
             <!-- Заявки -->
