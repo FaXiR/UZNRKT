@@ -46,11 +46,6 @@ namespace UZNRKT.Windows
 
         private void ButtonClick_add(object sender, RoutedEventArgs e)
         {
-            bool AutoOpenInUsAc = UsAc.AutoOpen;
-
-            UsAc.AutoOpen = false;
-            UsAc.ConnectOpen();
-
             if (F_Button_AddEdit.Content.ToString() == "Добавить")
             {
                 AddNewApplication();
@@ -59,9 +54,6 @@ namespace UZNRKT.Windows
             {
                 SaveApplication();
             }
-
-            UsAc.ConnectClose();
-            UsAc.AutoOpen = AutoOpenInUsAc;
 
             this.DialogResult = true;
         }

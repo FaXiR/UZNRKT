@@ -55,6 +55,9 @@ namespace UZNRKT
 
             if (CreateConnection() == true)
             {
+                //Открытие соединения
+                UsAc.ConnectOpen();
+
                 //Объявление таблиц
                 Table = new Tables(UsAc);
 
@@ -147,20 +150,14 @@ namespace UZNRKT
             //Подключение к БД
             try
             {
-                UsAc = new UsingAccess(BDWay, null, null, null)
-                {
-                    AutoOpen = true
-                };
+                UsAc = new UsingAccess(BDWay, null, null, null);
                 return true;
             }
             catch
             {
                 try
                 {
-                    UsAc = new UsingAccess(BDWay, null, null, "install")
-                    {
-                        AutoOpen = true
-                    };
+                    UsAc = new UsingAccess(BDWay, null, null, "install");
                     return true;
                 }
                 catch (Exception ex)

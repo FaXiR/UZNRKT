@@ -64,11 +64,6 @@ namespace UZNRKT.Windows
 
         private void ButtonClick_add(object sender, RoutedEventArgs e)
         {
-            bool AutoOpenInUsAc = UsAc.AutoOpen;
-
-            UsAc.AutoOpen = false;
-            UsAc.ConnectOpen();
-
             bool SuccessAdd = false;
 
             if (F_Button_AddEdit.Content.ToString() == "Добавить")
@@ -79,9 +74,6 @@ namespace UZNRKT.Windows
             {
                 //SuccessAdd = SaveUser();
             }
-
-            UsAc.ConnectClose();
-            UsAc.AutoOpen = AutoOpenInUsAc;
 
             if (SuccessAdd)
                 this.DialogResult = true;
