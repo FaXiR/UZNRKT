@@ -43,11 +43,11 @@
             <ComboBox x:Name="F_Producer" Width="140" Text="Изготовитель:"  HorizontalAlignment="Left" Height="24"  Margin="0,4,4,0" />
             <ComboBox x:Name="F_Model" Width="140" Text="Модель:"  HorizontalAlignment="Left" Height="24"  Margin="0,4,4,0" />
             <ComboBox x:Name="F_NameUsligu" Width="140" Text="Название услуги:"  HorizontalAlignment="Left" Height="24"  Margin="0,4,4,0" />
-            <TextBox x:Name="F_DetalCount" Width="140" HorizontalAlignment="Left" Height="24" Margin="0,4,4,0" />
+            <TextBox x:Name="F_DetalCount" Width="140" HorizontalAlignment="Left" Height="24" Margin="0,4,4,0" PreviewTextInput="TextBoxOnlyNum_KeyPress"/>
             <ComboBox x:Name="F_DetalName" Width="140" Text="Деталь:"  HorizontalAlignment="Left" Height="24"  Margin="0,4,4,0" />
             <ComboBox x:Name="F_Statys" Width="140" Text="Статус выполнения:"  HorizontalAlignment="Left" Height="24" Margin="0,4,4,0" />
             <DatePicker x:Name="F_DataFinished" Width="140" HorizontalAlignment="Left" Height="24" Margin="0,4,4,0" />
-            <TextBox x:Name="F_Summ" Width="140" HorizontalAlignment="Left" Height="24" Margin="0,4,4,0" />
+            <TextBox x:Name="F_Summ" Width="140" HorizontalAlignment="Left" Height="24" Margin="0,4,4,0" PreviewTextInput="TextBoxOnlyDrobNum_KeyPress" />
         </StackPanel>
         
         <!-- Кнопки -->

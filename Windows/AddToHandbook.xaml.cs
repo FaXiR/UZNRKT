@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using UZNRKT.Modules;
 
 namespace UZNRKT.Windows
@@ -34,6 +35,11 @@ namespace UZNRKT.Windows
             CreateFields();
         }
 
+        private void TextBoxOnlyNum_KeyPress(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !(Char.IsDigit(e.Text, 0));
+        }
+
         private void CreateFields()
         {
             //Получение названий колонок
@@ -57,7 +63,7 @@ namespace UZNRKT.Windows
                     Error = true;
                     return;
                 }
-                
+
             }
 
             //Получение максимального ID
@@ -89,6 +95,11 @@ namespace UZNRKT.Windows
                     Margin = new Thickness(2),
                     HorizontalAlignment = HorizontalAlignment.Left,
                 };
+
+                if (type == "System.Int32")
+                {
+                    textbox.PreviewTextInput += TextBoxOnlyNum_KeyPress;
+                }
 
                 if (j == 0)
                 {

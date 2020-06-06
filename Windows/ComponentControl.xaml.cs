@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using UZNRKT.Modules;
 
 namespace UZNRKT.Windows
@@ -164,6 +165,11 @@ namespace UZNRKT.Windows
         private void ButtonClick_cancel(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
+        }
+
+        private void TextBoxOnlyNum_KeyPress(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !(Char.IsDigit(e.Text, 0));
         }
     }
 }

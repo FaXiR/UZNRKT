@@ -26,7 +26,7 @@
         <!-- Поля ввода -->
         <StackPanel Grid.Row="0" Grid.Column="1">
             <TextBox x:Name="F_Name"  Width="140" HorizontalAlignment="Left" Height="24"  Margin="0,4,4,0" />
-            <TextBox x:Name="F_Count" Width="140" HorizontalAlignment="Left" Height="24"  Margin="0,4,4,0" />
+            <TextBox x:Name="F_Count" Width="140" HorizontalAlignment="Left" Height="24"  Margin="0,4,4,0" PreviewTextInput="TextBoxOnlyNum_KeyPress"/>
             <ComboBox x:Name="F_Postav" Width="140" HorizontalAlignment="Left" Height="24"  Margin="0,4,4,0" />
         </StackPanel>
 
