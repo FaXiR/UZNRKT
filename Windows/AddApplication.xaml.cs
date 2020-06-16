@@ -47,7 +47,7 @@ namespace UZNRKT.Windows
 
         private void ButtonClick_add(object sender, RoutedEventArgs e)
         {
-            if (F_DataZayavki.DisplayDate > F_DataFinished.DisplayDate)
+            if (F_DataZayavki.SelectedDate > F_DataFinished.SelectedDate)
             {
                 MessageBox.Show("Дата окончания не может быть раньше, чем дата подачи заявки");
                 return;
