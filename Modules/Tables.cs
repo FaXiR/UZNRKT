@@ -18,13 +18,13 @@
         {
             this.UsAc = UsAc;
 
-            Neispravnosti = new UsingDataView(UsAc, "Neispravnosti.Naimenovanie AS Неисправность", "Neispravnosti", null, null);
-            Izgotovitel = new UsingDataView(UsAc, "Izgotovitel.Nazvanie_Izgotovitel AS Название", "Izgotovitel", null, null);
-            Services = new UsingDataView(UsAc, "Services.Nazvanie_Services AS Название, Services.Stoimost_Services AS Стоимость", "Services", null, null);
-            Statys = new UsingDataView(UsAc, "Statys.Statys_Statys AS Статус", "Statys", null, null);
-            TypeTehniki = new UsingDataView(UsAc, " TypeTehniki.Type_TypeTehniki AS Тип", "TypeTehniki", null, null);
-            Oborudovanie = new UsingDataView(UsAc, " Oborudovanie.Model AS Модель, Oborudovanie.SerNomer AS[Серийный номер], Oborudovanie.Komplektaciya AS Комплектация, Oborudovanie.Primechaniya AS Примечания", "Oborudovanie", null, null);
-            Doljnosti = new UsingDataView(UsAc, " Doljnosti.Nazvanie_Doljnost AS Должность", "Doljnosti", null, null);
+            Neispravnosti = new UsingDataView(UsAc, "Neispravnosti.Naimenovanie AS Неисправность", "Neispravnosti");
+            Izgotovitel = new UsingDataView(UsAc, "Izgotovitel.Nazvanie_Izgotovitel AS Название", "Izgotovitel");
+            Services = new UsingDataView(UsAc, "Services.Nazvanie_Services AS Название, Services.Stoimost_Services AS Стоимость", "Services");
+            Statys = new UsingDataView(UsAc, "Statys.Statys_Statys AS Статус", "Statys");
+            TypeTehniki = new UsingDataView(UsAc, " TypeTehniki.Type_TypeTehniki AS Тип", "TypeTehniki");
+            Oborudovanie = new UsingDataView(UsAc, " Oborudovanie.Model AS Модель, Oborudovanie.SerNomer AS[Серийный номер], Oborudovanie.Komplektaciya AS Комплектация, Oborudovanie.Primechaniya AS Примечания", "Oborudovanie");
+            Doljnosti = new UsingDataView(UsAc, " Doljnosti.Nazvanie_Doljnost AS Должность", "Doljnosti");
                        
             Zayavki = new UsingDataView(
                 UsAc
