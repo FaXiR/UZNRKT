@@ -38,7 +38,7 @@
                 , "Users.Login_User AS Пользователь, Log_avtorizatcii.Time_in AS [Время входа], Log_avtorizatcii.Time_out AS [Время выхода]"
                 , "Users Users RIGHT JOIN Log_avtorizatcii ON Users.ID_User = Log_avtorizatcii.ID_User"
                 , null
-                , "Log_avtorizatcii.Time_in DESC");
+                , null);
 
             Sotrudniki = new UsingDataView(
                 UsAc
