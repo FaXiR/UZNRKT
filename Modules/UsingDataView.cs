@@ -128,7 +128,7 @@ namespace UZNRKT.Modules
         /// <param name="From">Таблицы</param>
         /// <param name="Where">Условия</param>
         /// <param name="OrderBy">Сортировка</param>
-        public UsingDataView(UsingAccess UsAc, string Select, string From, string Where, string OrderBy)
+        public UsingDataView(UsingAccess UsAc, string Select, string From, string Where = null, string OrderBy =  null)
         {
             this.UsAc = UsAc;
             this.Select = Select;

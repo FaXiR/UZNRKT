@@ -29,51 +29,37 @@
             Zayavki = new UsingDataView(
                 UsAc
                 , "Zayavki.ID_Zayavki AS [ID заявки], Zayavki.Date_Zayavki AS [Дата заявки], Sotrudniki.FIO_Master AS [ФИО мастера], Clients.FIO_Client AS [ФИО клиента], Neispravnosti.Naimenovanie AS [Тип неисправности], TypeTehniki.Type_TypeTehniki AS [Тип техники], Izgotovitel.Nazvanie_Izgotovitel AS Изготовитель, Oborudovanie.Model AS Модель, Services.Nazvanie_Services AS [Название услуги], Zayavki.KolvoServ AS [Кол-во деталей], TMC.Nazvanie_TMC AS Деталь, Statys.Statys_Statys AS [Статус выполнения], Zayavki.Date_okonchaniya_Zayavki AS [Дата окончания], Zayavki.Summa AS Сумма"
-                , "TypeTehniki RIGHT JOIN (TMC RIGHT JOIN (Statys RIGHT JOIN (Services RIGHT JOIN (Oborudovanie RIGHT JOIN (Neispravnosti RIGHT JOIN (Sotrudniki RIGHT JOIN (Izgotovitel RIGHT JOIN (Clients RIGHT JOIN Zayavki ON Clients.ID_Client = Zayavki.Client) ON Izgotovitel.ID_Izgotovitel = Zayavki.Izgotovitel) ON Sotrudniki.ID_Master = Zayavki.Master) ON Neispravnosti.ID_Neispravnosti = Zayavki.Neispravnost_Zayavki) ON Oborudovanie.ID_Oborudovaniya = Zayavki.ID_Oborudovaniya) ON Services.ID_Services = Zayavki.Services) ON Statys.ID_Statys = Zayavki.Statys) ON TMC.ID_TMC = Zayavki.Materiali) ON TypeTehniki.ID_TypeTehniki = Zayavki.Type_Tehniki_Zayavki"
-                , null
-                , null);
+                , "TypeTehniki RIGHT JOIN (TMC RIGHT JOIN (Statys RIGHT JOIN (Services RIGHT JOIN (Oborudovanie RIGHT JOIN (Neispravnosti RIGHT JOIN (Sotrudniki RIGHT JOIN (Izgotovitel RIGHT JOIN (Clients RIGHT JOIN Zayavki ON Clients.ID_Client = Zayavki.Client) ON Izgotovitel.ID_Izgotovitel = Zayavki.Izgotovitel) ON Sotrudniki.ID_Master = Zayavki.Master) ON Neispravnosti.ID_Neispravnosti = Zayavki.Neispravnost_Zayavki) ON Oborudovanie.ID_Oborudovaniya = Zayavki.ID_Oborudovaniya) ON Services.ID_Services = Zayavki.Services) ON Statys.ID_Statys = Zayavki.Statys) ON TMC.ID_TMC = Zayavki.Materiali) ON TypeTehniki.ID_TypeTehniki = Zayavki.Type_Tehniki_Zayavki");
 
             AutorizationTime = new UsingDataView(
                 UsAc
                 , "Users.Login_User AS Пользователь, Log_avtorizatcii.Time_in AS [Время входа], Log_avtorizatcii.Time_out AS [Время выхода]"
-                , "Users Users RIGHT JOIN Log_avtorizatcii ON Users.ID_User = Log_avtorizatcii.ID_User"
-                , null
-                , null);
+                , "Users Users RIGHT JOIN Log_avtorizatcii ON Users.ID_User = Log_avtorizatcii.ID_User");
 
             Sotrudniki = new UsingDataView(
                 UsAc
                 , "Sotrudniki.FIO_Master AS [ФИО Мастера], Doljnosti.Nazvanie_Doljnost AS Должность, Sotrudniki.DateOfBirth_Master AS [Дата рождения], Sotrudniki.Phone_Master AS Телефон, Sotrudniki.Adress_Master AS Адрес, Sotrudniki.Email_Master AS Emali"
-                , "Doljnosti RIGHT JOIN Sotrudniki ON Doljnosti.ID_Doljnost = Sotrudniki.Doljnost_Master"
-                , null
-                , null);
+                , "Doljnosti RIGHT JOIN Sotrudniki ON Doljnosti.ID_Doljnost = Sotrudniki.Doljnost_Master");
 
             Clients = new UsingDataView(
                 UsAc
                 , "Clients.ID_Client AS ID, Clients.FIO_Client AS ФИО, Clients.Phone_Client AS Телефон, Clients.Adress_Client AS Адрес, Clients.Email_Client AS Email"
-                , "Clients"
-                , null
-                , null);
+                , "Clients");
 
             DogovorOPostavke = new UsingDataView(
                 UsAc
                 , "Postavchiki.Nazvanie_Postavchik AS Поставщик, DogovorOPostavke.DateZakaza AS [Дата заказа], DogovorOPostavke.NazvanieMateriala AS Материал, DogovorOPostavke.CenaZaEd AS [Цена заказа], DogovorOPostavke.Kolichestvo AS Количество, DogovorOPostavke.DatePostavki AS [Дата поставки], DogovorOPostavke.SummaZakaza AS [Сумма заказа]"
-                , "Postavchiki RIGHT JOIN DogovorOPostavke ON Postavchiki.ID_Postavchik = DogovorOPostavke.Postavchik"
-                , null
-                , null);
+                , "Postavchiki RIGHT JOIN DogovorOPostavke ON Postavchiki.ID_Postavchik = DogovorOPostavke.Postavchik");
 
             Users = new UsingDataView(
                 UsAc
                 , "Users.ID_User AS [# ID], Users.Login_User AS Логин, Sotrudniki.FIO_Master AS ФИО, Doljnosti.Nazvanie_Doljnost AS Должность, Roles.Role_Role AS Роль"
-                , "(Roles RIGHT JOIN Users ON Roles.ID_Role = Users.Role) LEFT JOIN (Doljnosti RIGHT JOIN Sotrudniki ON Doljnosti.ID_Doljnost = Sotrudniki.Doljnost_Master) ON Users.ID_User = Sotrudniki.IDUsera"
-                , null
-                , null);
+                , "(Roles RIGHT JOIN Users ON Roles.ID_Role = Users.Role) LEFT JOIN (Doljnosti RIGHT JOIN Sotrudniki ON Doljnosti.ID_Doljnost = Sotrudniki.Doljnost_Master) ON Users.ID_User = Sotrudniki.IDUsera");
 
             TMC = new UsingDataView(
                 UsAc
                 , "TMC.ID_TMC AS ID, TMC.Nazvanie_TMC AS Название, TMC.Kolichestvo_TMC AS Количество, Postavchiki.Nazvanie_Postavchik AS Поставщик"
-                , "Postavchiki RIGHT JOIN TMC ON Postavchiki.ID_Postavchik = TMC.Postavchik_TMC"
-                , null
-                , null);
+                , "Postavchiki RIGHT JOIN TMC ON Postavchiki.ID_Postavchik = TMC.Postavchik_TMC");
         }
 
         public UsingDataView Zayavki;
